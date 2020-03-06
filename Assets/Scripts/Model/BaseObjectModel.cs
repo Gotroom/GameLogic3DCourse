@@ -2,7 +2,7 @@
 
 namespace Ermolaev_3D
 {
-    public class BaseObjectModel : MonoBehaviour
+    public abstract class BaseObjectModel : MonoBehaviour
     {
         private int _layer;
         private bool _isVisible;
@@ -18,6 +18,12 @@ namespace Ermolaev_3D
                 _layer = value;
                 AskLayer(Transform, _layer);
             }
+        }
+
+        public string Name
+        {
+            get => gameObject.name;
+            set => gameObject.name = value;
         }
 
         public bool Visible

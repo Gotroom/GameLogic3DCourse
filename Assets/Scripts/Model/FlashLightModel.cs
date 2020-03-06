@@ -66,5 +66,10 @@ namespace Ermolaev_3D
             }
             return false;
         }
+
+        public bool IsLowBattery()
+        {
+            return BatteryChargeCurrent <= _batteryChargeMax / 10;
+        }
     }
 }
