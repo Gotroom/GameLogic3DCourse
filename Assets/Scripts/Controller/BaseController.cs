@@ -2,6 +2,12 @@
 {
     public abstract class BaseController
     {
+        protected UIInterface UiInterface;
+        protected BaseController()
+        {
+            UiInterface = new UIInterface();
+        }
+
         public bool IsActive { get; private set; }
 
         public virtual void On()
@@ -19,11 +25,11 @@
             IsActive = false;
         }
 
-        public void Switch()
+        public void Switch(params BaseObjectModel[] obj)
         {
             if (!IsActive)
             {
-                On();
+                On(obj);
             }
             else
             {
@@ -32,4 +38,3 @@
         }
     }
 }
-
