@@ -18,8 +18,9 @@ namespace Ermolaev_3D
             ServiceLocator.SetService(new WeaponController());
             ServiceLocator.SetService(new InputController());
             ServiceLocator.SetService(new SelectionController());
+            ServiceLocator.SetService(new BotController());
 
-            _executeControllers = new IExecutable[4];
+            _executeControllers = new IExecutable[5];
 
             _executeControllers[0] = ServiceLocator.Resolve<PlayerController>();
 
@@ -28,6 +29,8 @@ namespace Ermolaev_3D
             _executeControllers[2] = ServiceLocator.Resolve<InputController>();
 
             _executeControllers[3] = ServiceLocator.Resolve<SelectionController>();
+
+            _executeControllers[4] = ServiceLocator.Resolve<BotController>();
         }
 
         public IExecutable this[int index] => _executeControllers[index];
@@ -46,6 +49,7 @@ namespace Ermolaev_3D
             ServiceLocator.Resolve<InputController>().On();
             ServiceLocator.Resolve<SelectionController>().On();
             ServiceLocator.Resolve<PlayerController>().On();
+            ServiceLocator.Resolve<BotController>().On();
         }
     }
 }

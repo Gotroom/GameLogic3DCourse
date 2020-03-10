@@ -12,7 +12,7 @@ namespace Ermolaev_3D
 
             if (setDamage != null)
             {
-                setDamage.SetDamage(new CollisionInfo(_curDamage, Rigidbody.velocity));
+                setDamage.SetDamage(new CollisionInfo(_curDamage, collision.contacts[0], collision.transform, Rigidbody.velocity));
             }
 
             DestroyAmmunition();
