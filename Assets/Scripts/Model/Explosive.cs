@@ -29,7 +29,7 @@ namespace Ermolaev_3D
                     setDamage.SetDamage(new CollisionInfo(_curDamage, collision.contacts[0], null, Rigidbody.velocity));
                 }
             }
-            Instantiate(_explosionParticles, transform);
+            Instantiate(_explosionParticles, transform.position, transform.rotation);
         }
     }
 }
