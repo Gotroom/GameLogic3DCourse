@@ -8,7 +8,7 @@ namespace Ermolaev_3D
         [SerializeField] private Transform _weaponPosition;
         [SerializeField] private Ammunition _ammunition;
 
-        [SerializeField] private float _force = 999;
+        [SerializeField] private float _force = 999.0f;
 
         public override string GetMessage()
         {

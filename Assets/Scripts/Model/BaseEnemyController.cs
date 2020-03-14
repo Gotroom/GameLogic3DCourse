@@ -3,7 +3,7 @@ using System;
 
 namespace Ermolaev_3D
 {
-    public abstract class BaseEnemyController : MonoBehaviour, IDamagable, ISelectable
+    public abstract class BaseEnemyController : BaseObjectModel, IDamagable, ISelectable
     {
         public event Action<BaseEnemyController> Killed = delegate { };
 
@@ -31,10 +31,6 @@ namespace Ermolaev_3D
 
             if (HealthPoints <= 0)
             {
-                if (!TryGetComponent<Rigidbody>(out _))
-                {
-                    gameObject.AddComponent<Rigidbody>();
-                }
                 Destroy(gameObject, TimeToDestroy);
                 Killed.Invoke(this);
                 _isDead = true;

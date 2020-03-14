@@ -56,7 +56,6 @@ namespace Ermolaev_3D
 
         private void SelectObject(GameObject obj)
         {
-            if (obj == _dedicatedObj) return;
             _selectedObj = obj.GetComponent<ISelectable>();
             if (_selectedObj != null)
             {
@@ -68,7 +67,6 @@ namespace Ermolaev_3D
                 UiInterface.SelectionObjMessageUi.Text = String.Empty;
                 _isSelectedObj = false;
             }
-            _dedicatedObj = obj;
         }
     }
 }

@@ -7,6 +7,16 @@ namespace Ermolaev_3D
         private KeyCode _activeFlashLight = KeyCode.F;
         private KeyCode _cancel = KeyCode.Escape;
         private KeyCode _reloadClip = KeyCode.R;
+
+        private KeyCode[] _changeWeaponKeys =
+        {
+            KeyCode.Alpha1,
+            KeyCode.Alpha2,
+            KeyCode.Alpha3,
+            KeyCode.Alpha4,
+            KeyCode.Alpha5,
+        };
+
         private Vector2 _mouseScroll;
         private int _mouseButton = (int)MouseButton.LeftButton;
 
@@ -24,9 +34,12 @@ namespace Ermolaev_3D
                 ServiceLocator.Resolve<FlashLightController>().Switch(ServiceLocator.Resolve<Inventory>().FlashLight);
             }
 
-            if (Input.GetKeyDown(KeyCode.Alpha1))
+            for (int i = 0; i < _changeWeaponKeys.Length; i++)
             {
-                SelectWeapon(0);
+                if (Input.GetKeyDown(_changeWeaponKeys[i]))
+                {
+                    SelectWeapon(i);
+                }
             }
 
             if (_mouseScroll.y > Input.mouseScrollDelta.y)

@@ -13,23 +13,23 @@ namespace Ermolaev_3D
 
         private void OnCollisionEnter(Collision collision)
         {
-            Explode();
+            Explode(collision);
 
             DestroyAmmunition(_destroyTimeAfterCollision);
         }
 
-        private void Explode()
+        private void Explode(Collision collision)
         {
-            var collisions = Physics.OverlapSphere(transform.position, _explosionRadius);
-            foreach (var collision in collisions)
+            var colliders = Physics.OverlapSphere(transform.position, _explosionRadius);
+            foreach (var collider in colliders)
             {
                 var setDamage = collision.gameObject.GetComponent<IDamagable>();
                 if (setDamage != null)
                 {
-                    setDamage.SetDamage(new CollisionInfo(_curDamage, Rigidbody.velocity));
+                    setDamage.SetDamage(new CollisionInfo(_curDamage, collision.contacts[0], null, Rigidbody.velocity));
                 }
             }
-            Instantiate(_explosionParticles, transform);
+            Instantiate(_explosionParticles, transform.position, transform.rotation);
         }
     }
 }
