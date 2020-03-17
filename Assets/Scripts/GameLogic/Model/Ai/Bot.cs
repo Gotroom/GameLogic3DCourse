@@ -101,7 +101,7 @@ namespace Ermolaev_3D
                         if (BotStates != BotStates.Patrol)
                         {
                             BotStates = BotStates.Patrol;
-                            _point = Patrol.GenericPoint(transform);
+                            _point = Patrol.GenericPoint(transform, false);
                             MovePoint(_point);
                             Agent.stoppingDistance = 0;
                         }
