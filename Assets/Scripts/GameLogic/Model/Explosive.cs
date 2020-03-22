@@ -15,7 +15,7 @@ namespace Ermolaev_3D
         {
             Explode(collision);
 
-            DestroyAmmunition(_destroyTimeAfterCollision);
+            Invoke(nameof(ReturnToPool), _timeToDestruct);
         }
 
         private void Explode(Collision collision)

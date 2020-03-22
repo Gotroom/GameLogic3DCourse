@@ -14,8 +14,7 @@ namespace Ermolaev_3D
             {
                 setDamage.SetDamage(new CollisionInfo(_curDamage, collision.contacts[0], collision.transform, Rigidbody.velocity));
             }
-
-            DestroyAmmunition();
+            Invoke(nameof(ReturnToPool), _timeToDestruct);
         }
     }
 }

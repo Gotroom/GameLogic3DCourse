@@ -32,8 +32,7 @@ namespace Ermolaev_3D
             Debug.Log(euler);
             euler.x += -90;
             Quaternion rotation = Quaternion.Euler(euler.x, euler.y, euler.z);
-            var temAmmunition = Instantiate(Ammunition, _barrel.position, rotation);//todo Pool object
-            temAmmunition.AddForce(_barrel.forward * _force);
+            UseAmmunitionFromPool(_barrel.position, rotation, _barrel.forward);
             Clip.CountAmmunition--;
             _isReady = false;
             Invoke(nameof(ReadyShoot), _rechargeTime); // todo таймер контроллер 

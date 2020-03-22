@@ -71,7 +71,6 @@ namespace Ermolaev_3D
 
                 tempBot.Agent.avoidancePriority = index;
                 tempBot.Target = ServiceLocatorMonoBehaviour.GetService<CharacterController>().transform;
-                //todo разных противников
                 AddBotToList(tempBot);
             }
         }

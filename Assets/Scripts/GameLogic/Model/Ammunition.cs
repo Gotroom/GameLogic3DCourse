@@ -19,7 +19,7 @@ namespace Ermolaev_3D
 
         private void Start()
         {
-            DestroyAmmunition(_timeToDestruct);
+            Invoke(nameof(ReturnToPool), _timeToDestruct);
             InvokeRepeating(nameof(LossOfDamage), 0, 1);
         }
 
@@ -34,11 +34,10 @@ namespace Ermolaev_3D
             _curDamage -= _lossOfDamageAtTime;
         }
 
-        protected void DestroyAmmunition(float timeToDestruct = 0)
+        protected void ReturnToPool()
         {
-            Destroy(gameObject, timeToDestruct);
+            gameObject.SetActive(false);
             CancelInvoke(nameof(LossOfDamage));
-            // Вернуть в пул
         }
     }
 }
