@@ -229,6 +229,7 @@ GameObject:
   - component: {fileID: 1502495636902808738}
   - component: {fileID: 1502495636902808765}
   - component: {fileID: 1502495636902808764}
+  - component: {fileID: -3069928952181300023}
   m_Layer: 0
   m_Name: Bot
   m_TagString: Untagged
@@ -288,11 +289,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HealthPoints: 100
+  TimeToDestroy: 10
   Vision:
     ActiveDis: 30
     ActiveAng: 90
   Weapon: {fileID: 1502495636506851045}
   DetectionCooldown: 5
+--- !u!114 &-3069928952181300023
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1502495636902808767}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7e26773b1579b2439ef0a9bb7ab3183, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _ico: {fileID: 0}
 --- !u!1 &1502495637420150543
 GameObject:
   m_ObjectHideFlags: 0

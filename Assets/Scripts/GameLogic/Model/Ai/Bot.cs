@@ -145,6 +145,11 @@ namespace Ermolaev_3D
             }
         }
 
+        public void ManualDestroy()
+        {
+            Destroy(gameObject);
+        }
+
         private void SetDetected()
         {
             BotStates = BotStates.Detected;
