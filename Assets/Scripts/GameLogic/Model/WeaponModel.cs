@@ -28,14 +28,6 @@ namespace Ermolaev_3D
         {
             base.Awake();
             _bulletPool = new ObjectPool(Ammunition, _poolCount);
-            //_ammoPool = new List<Ammunition>();
-            //var rootObject = new GameObject(nameof(Ammunition));
-            //for (int i = 0; i < _poolCount; i++)
-            //{
-            //    var ammunition = Instantiate(Ammunition, Vector3.zero, Quaternion.identity, rootObject.transform);
-            //    ammunition.gameObject.SetActive(false);
-            //    _ammoPool.Add(ammunition);
-            //}
         }
 
         private void Start()

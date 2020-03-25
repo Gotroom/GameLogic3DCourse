@@ -3799,6 +3799,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 764947034743759186, guid: e30c473ba8ee96742b0804765f90d763,
+        type: 3}
+      propertyPath: m_TagString
+      value: Arrow
+      objectReference: {fileID: 0}
+    - target: {fileID: 2937744354989732266, guid: e30c473ba8ee96742b0804765f90d763,
+        type: 3}
+      propertyPath: m_TagString
+      value: Arrow
+      objectReference: {fileID: 0}
+    - target: {fileID: 2937744354989732267, guid: e30c473ba8ee96742b0804765f90d763,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.786
+      objectReference: {fileID: 0}
     - target: {fileID: 2937744355265185447, guid: e30c473ba8ee96742b0804765f90d763,
         type: 3}
       propertyPath: m_Name
@@ -3868,6 +3883,11 @@ PrefabInstance:
         type: 3}
       propertyPath: _poolCount
       value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 4659913012644870798, guid: e30c473ba8ee96742b0804765f90d763,
+        type: 3}
+      propertyPath: m_TagString
+      value: Arrow
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e30c473ba8ee96742b0804765f90d763, type: 3}

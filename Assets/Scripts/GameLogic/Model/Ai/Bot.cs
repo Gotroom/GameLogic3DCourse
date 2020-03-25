@@ -129,6 +129,8 @@ namespace Ermolaev_3D
                 }
                 if (Vision.VisionM(transform, Target))
                 {
+                    if (Weapon.Clip.CountAmmunition <= 0)
+                        Weapon.ReloadClip();
                     Weapon.Fire();
                     _detectionTime = 0.0f;
                 }
