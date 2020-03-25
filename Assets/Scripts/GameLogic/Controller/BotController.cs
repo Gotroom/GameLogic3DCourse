@@ -13,7 +13,7 @@ namespace Ermolaev_3D
         {
             for (var index = 0; index < _countBot; index++)
             {
-                var tempBot = Object.Instantiate(ServiceLocatorMonoBehaviour.GetService<Reference>().Bot,
+                var tempBot = Object.Instantiate(Resources.Load<Bot>("Bot"),
                     Patrol.GenericPoint(ServiceLocatorMonoBehaviour.GetService<CharacterController>().transform),
                     Quaternion.identity);
 
@@ -42,6 +42,37 @@ namespace Ermolaev_3D
 
             bot.Killed -= RemoveBotToList;
             _getBotList.Remove(bot as Bot);
+        }
+
+        private void ClearBotList()
+        {
+            foreach (var bot in _getBotList)
+            {
+                if (!_getBotList.Contains(bot))
+                {
+                    continue;
+                }
+                bot.Killed -= RemoveBotToList;
+                bot.ManualDestroy();
+            }
+            _getBotList.Clear();
+        }
+
+        public void LoadBots(List<SerializableGameObject> botsSaveData)
+        {
+            ClearBotList();
+            for (var index = 0; index < botsSaveData.Count; index++)
+            {
+                var botData = botsSaveData[index];
+                var botPosition = new Vector3(botData.Pos.X, botData.Pos.Y, botData.Pos.Y);
+                var tempBot = Object.Instantiate(Resources.Load<Bot>("Bot"),
+                    botPosition,
+                    Quaternion.identity);
+
+                tempBot.Agent.avoidancePriority = index;
+                tempBot.Target = ServiceLocatorMonoBehaviour.GetService<CharacterController>().transform;
+                AddBotToList(tempBot);
+            }
         }
 
         public void Execute()

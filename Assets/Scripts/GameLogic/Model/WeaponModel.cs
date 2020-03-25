@@ -16,11 +16,27 @@ namespace Ermolaev_3D
         [SerializeField] protected Transform _barrel;
         [SerializeField] protected float _force = 999;
         [SerializeField] protected float _rechargeTime = 0.2f;
+        [SerializeField] protected int _poolCount = 300;
         private Queue<Clip> _clips = new Queue<Clip>();
 
+        protected ObjectPool _bulletPool;
         protected bool _isReady = true;
 
         public int CountClip => _clips.Count;
+
+        protected override void Awake()
+        {
+            base.Awake();
+            _bulletPool = new ObjectPool(Ammunition, _poolCount);
+            //_ammoPool = new List<Ammunition>();
+            //var rootObject = new GameObject(nameof(Ammunition));
+            //for (int i = 0; i < _poolCount; i++)
+            //{
+            //    var ammunition = Instantiate(Ammunition, Vector3.zero, Quaternion.identity, rootObject.transform);
+            //    ammunition.gameObject.SetActive(false);
+            //    _ammoPool.Add(ammunition);
+            //}
+        }
 
         private void Start()
         {
@@ -33,6 +49,26 @@ namespace Ermolaev_3D
         }
 
         public abstract void Fire();
+
+        protected void UseAmmunitionFromPool()
+        {
+            UseAmmunitionFromPool(_barrel);
+        }
+
+
+        protected void UseAmmunitionFromPool(Transform transform)
+        {
+            UseAmmunitionFromPool(transform.position, transform.rotation, transform.forward);
+        }
+
+        protected void UseAmmunitionFromPool(Vector3 position, Quaternion rotation, Vector3 direction)
+        {
+            Ammunition tempAmmo = _bulletPool.GetFromPool() as Ammunition;
+            tempAmmo.transform.position = transform.position;
+            tempAmmo.transform.rotation = rotation;
+            tempAmmo.gameObject.SetActive(true);
+            tempAmmo.AddForce(direction * _force);
+        }
 
         protected void ReadyShoot()
         {

@@ -7,6 +7,8 @@ namespace Ermolaev_3D
         private KeyCode _activeFlashLight = KeyCode.F;
         private KeyCode _cancel = KeyCode.Escape;
         private KeyCode _reloadClip = KeyCode.R;
+        private KeyCode _save = KeyCode.F5;
+        private KeyCode _load = KeyCode.F9;
 
         private KeyCode[] _changeWeaponKeys =
         {
@@ -32,6 +34,16 @@ namespace Ermolaev_3D
             if (Input.GetKeyDown(_activeFlashLight))
             {
                 ServiceLocator.Resolve<FlashLightController>().Switch(ServiceLocator.Resolve<Inventory>().FlashLight);
+            }
+
+            if (Input.GetKeyDown(_save))
+            {
+                ServiceLocator.Resolve<SaveLoadController>().Save();
+            }
+
+            if (Input.GetKeyDown(_load))
+            {
+                ServiceLocator.Resolve<SaveLoadController>().Load();
             }
 
             for (int i = 0; i < _changeWeaponKeys.Length; i++)
