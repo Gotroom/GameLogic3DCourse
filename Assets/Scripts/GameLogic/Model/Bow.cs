@@ -29,7 +29,6 @@ namespace Ermolaev_3D
             if (!_isReady) return;
             if (Clip.CountAmmunition <= 0) return;
             var euler = _barrel.rotation.eulerAngles;
-            Debug.Log(euler);
             euler.x += -90;
             Quaternion rotation = Quaternion.Euler(euler.x, euler.y, euler.z);
             UseAmmunitionFromPool(_barrel.position, rotation, _barrel.forward);
