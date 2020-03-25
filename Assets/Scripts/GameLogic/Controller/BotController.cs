@@ -13,7 +13,7 @@ namespace Ermolaev_3D
         {
             for (var index = 0; index < _countBot; index++)
             {
-                var tempBot = Object.Instantiate(Resources.Load<Bot>("Bot"),
+                var tempBot = UnityEngine.Object.Instantiate(Resources.Load<Bot>("Bot"),
                     Patrol.GenericPoint(ServiceLocatorMonoBehaviour.GetService<CharacterController>().transform),
                     Quaternion.identity);
 
@@ -30,10 +30,11 @@ namespace Ermolaev_3D
             {
                 _getBotList.Add(bot);
                 bot.Killed += RemoveBotToList;
+                ServiceLocatorMonoBehaviour.GetService<ScoreUI>().AddEnemyReference(bot);
             }
         }
 
-        private void RemoveBotToList(BaseEnemyController bot)
+        private void RemoveBotToList(BaseEnemyModel bot)
         {
             if (!_getBotList.Contains(bot))
             {

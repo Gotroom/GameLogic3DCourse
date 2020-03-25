@@ -120,6 +120,96 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 23800000, guid: bd393f653dce27d4b9d6cfe2af47ecdd, type: 2}
+--- !u!1 &35117358
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 35117359}
+  - component: {fileID: 35117362}
+  - component: {fileID: 35117361}
+  - component: {fileID: 35117360}
+  m_Layer: 5
+  m_Name: Text
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &35117359
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 35117358}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 114693777}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: 0, y: 25}
+  m_SizeDelta: {x: 160, y: 30}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &35117360
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 35117358}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1f57c905202b4f4683eb28d0198feb1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &35117361
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 35117358}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_FontSize: 14
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 10
+    m_MaxSize: 40
+    m_Alignment: 4
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: 
+--- !u!222 &35117362
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 35117358}
+  m_CullTransparentMesh: 0
 --- !u!1 &83167671
 GameObject:
   m_ObjectHideFlags: 0
@@ -633,6 +723,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 916e183efaa4a3c45a2288ff05fe89ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &426857918 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2937744355265185447, guid: e30c473ba8ee96742b0804765f90d763,
+    type: 3}
+  m_PrefabInstance: {fileID: 1937776311}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &426857919
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 426857918}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8520efb743b51664bbf30ab7c49c4447, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _health: 100
 --- !u!1 &550961428
 GameObject:
   m_ObjectHideFlags: 0
@@ -1380,9 +1489,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 725087843}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0e153de4f7c967346a6b4cce5e32c12b, type: 3}
+  m_Script: {fileID: 11500000, guid: 40bb09e82c999cc489db7880f1e4b25f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Count: 10
+  _resourceName: Mine
 --- !u!4 &725087845
 Transform:
   m_ObjectHideFlags: 0
@@ -1936,9 +2047,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 940620909}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0e153de4f7c967346a6b4cce5e32c12b, type: 3}
+  m_Script: {fileID: 11500000, guid: 40bb09e82c999cc489db7880f1e4b25f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Count: 10
+  _resourceName: HealthKit
 --- !u!4 &940620911
 Transform:
   m_ObjectHideFlags: 0

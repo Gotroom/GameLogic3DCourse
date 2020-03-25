@@ -4,7 +4,7 @@ using UnityEngine.AI;
 
 namespace Ermolaev_3D
 {
-    public sealed class Bot : BaseEnemyController
+    public sealed class Bot : BaseEnemyModel
     {
         public Vision Vision;
         public WeaponModel Weapon; //todo с разным оружием 
@@ -140,7 +140,6 @@ namespace Ermolaev_3D
                     _detectionTime += Time.deltaTime;
                     if (_detectionTime >= DetectionCooldown)
                     {
-                        print("lost");
                         ResetStateBot();
                     }
                 }
@@ -160,8 +159,11 @@ namespace Ermolaev_3D
 
         private void ResetStateBot()
         {
-            BotStates = BotStates.None;
-            Agent.ResetPath();
+            if (BotStates != BotStates.Died)
+            {
+                BotStates = BotStates.None;
+                Agent.ResetPath();
+            }
         }
 
         public override void SetDamage(CollisionInfo info)

@@ -6,14 +6,14 @@ namespace Ermolaev_3D
 {
     public sealed class ScoreUI : MonoBehaviour
     {
-        private List<BaseEnemyController> _enemies;
+        private List<BaseEnemyModel> _enemies;
         private Text _text;
         private int _pointsCounter;
 
         private void Awake()
         {
-            _enemies = new List<BaseEnemyController>();
-            _enemies.InsertRange(0, FindObjectsOfType<BaseEnemyController>());
+            _enemies = new List<BaseEnemyModel>();
+            _enemies.InsertRange(0, FindObjectsOfType<BaseEnemyModel>());
             _text = GetComponent<Text>();
         }
 
@@ -33,7 +33,23 @@ namespace Ermolaev_3D
             }
         }
 
-        private void OnKilledEnemy(BaseEnemyController sender)
+        public void AddEnemyReference(BaseEnemyModel enemy)
+        {
+            _enemies.Add(enemy);
+            enemy.Killed += OnKilledEnemy;
+        }
+
+        public void RemoveEnemyReference(BaseEnemyModel enemy)
+        {
+            var deadEnemy = _enemies.Find(e => e == enemy);
+            if (deadEnemy)
+            {
+                deadEnemy.Killed -= OnKilledEnemy;
+                deadEnemy = null;
+            }
+        }
+
+        private void OnKilledEnemy(BaseEnemyModel sender)
         {
             var pointTxt = "очков";
             ++_pointsCounter;
@@ -42,9 +58,7 @@ namespace Ermolaev_3D
             else if (_pointsCounter < 5) pointTxt = "очка";
             _text.text = $"Вы заработали {_pointsCounter} {pointTxt}";
 
-            var deadEnemy = _enemies.Find(e => e == sender);
-            deadEnemy.Killed -= OnKilledEnemy;
-            deadEnemy = null;
+            RemoveEnemyReference(sender);
         }
     }
 }

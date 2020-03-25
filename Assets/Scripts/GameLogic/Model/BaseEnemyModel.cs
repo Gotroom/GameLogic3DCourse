@@ -3,9 +3,9 @@ using System;
 
 namespace Ermolaev_3D
 {
-    public abstract class BaseEnemyController : BaseObjectModel, IDamagable, ISelectable
+    public abstract class BaseEnemyModel : BaseObjectModel, IDamagable, ISelectable
     {
-        public event Action<BaseEnemyController> Killed = delegate { };
+        public event Action<BaseEnemyModel> Killed = delegate { };
 
         public float HealthPoints = 100;
         public float TimeToDestroy = 10.0f;

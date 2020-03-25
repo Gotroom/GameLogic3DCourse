@@ -3,7 +3,7 @@
 
 namespace Ermolaev_3D
 {
-    public class FightBackEnemy : BaseEnemyController
+    public class FightBackEnemy : BaseEnemyModel
     {
         [SerializeField] private Transform _weaponPosition;
         [SerializeField] private Ammunition _ammunition;

@@ -51,5 +51,17 @@ namespace Ermolaev_3D
 				return _selectionObjMessageUi;
 			}
 		}
-	}
+
+        private HealthUI _healthUI;
+
+        public HealthUI HealthUI
+        {
+            get
+            {
+                if (!_healthUI)
+                    _healthUI = Object.FindObjectOfType<HealthUI>();
+                return _healthUI;
+            }
+        }
+    }
 }
