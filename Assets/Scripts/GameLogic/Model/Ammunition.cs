@@ -2,7 +2,7 @@
 
 namespace Ermolaev_3D
 {
-    public abstract class Ammunition : BaseObjectModel
+    public abstract class Ammunition : PoolableObject
     {
         [SerializeField] protected float _timeToDestruct = 10;
         [SerializeField] private float _baseDamage = 10;
@@ -23,7 +23,7 @@ namespace Ermolaev_3D
             InvokeRepeating(nameof(LossOfDamage), 0, 1);
         }
 
-        public void AddForce(Vector3 dir)
+        public virtual void AddForce(Vector3 dir)
         {
             if (!Rigidbody) return;
             Rigidbody.AddForce(dir);
@@ -34,9 +34,9 @@ namespace Ermolaev_3D
             _curDamage -= _lossOfDamageAtTime;
         }
 
-        protected void ReturnToPool()
+        protected override void ReturnToPool()
         {
-            gameObject.SetActive(false);
+            base.ReturnToPool();
             CancelInvoke(nameof(LossOfDamage));
         }
     }

@@ -19,7 +19,7 @@ namespace Ermolaev_3D
         [SerializeField] protected int _poolCount = 300;
         private Queue<Clip> _clips = new Queue<Clip>();
 
-        protected List<Ammunition> _ammoPool;
+        protected ObjectPool _bulletPool;
         protected bool _isReady = true;
 
         public int CountClip => _clips.Count;
@@ -27,14 +27,15 @@ namespace Ermolaev_3D
         protected override void Awake()
         {
             base.Awake();
-            _ammoPool = new List<Ammunition>();
-            var rootObject = new GameObject(nameof(Ammunition));
-            for (int i = 0; i < _poolCount; i++)
-            {
-                var ammunition = Instantiate(Ammunition, Vector3.zero, Quaternion.identity, rootObject.transform);
-                ammunition.gameObject.SetActive(false);
-                _ammoPool.Add(ammunition);
-            }
+            _bulletPool = new ObjectPool(Ammunition, _poolCount);
+            //_ammoPool = new List<Ammunition>();
+            //var rootObject = new GameObject(nameof(Ammunition));
+            //for (int i = 0; i < _poolCount; i++)
+            //{
+            //    var ammunition = Instantiate(Ammunition, Vector3.zero, Quaternion.identity, rootObject.transform);
+            //    ammunition.gameObject.SetActive(false);
+            //    _ammoPool.Add(ammunition);
+            //}
         }
 
         private void Start()
@@ -62,9 +63,9 @@ namespace Ermolaev_3D
 
         protected void UseAmmunitionFromPool(Vector3 position, Quaternion rotation, Vector3 direction)
         {
-            Ammunition tempAmmo = _ammoPool.Find(e => !e.gameObject.activeInHierarchy);
+            Ammunition tempAmmo = _bulletPool.GetFromPool() as Ammunition;
             tempAmmo.transform.position = transform.position;
-            tempAmmo.transform.rotation = transform.rotation;
+            tempAmmo.transform.rotation = rotation;
             tempAmmo.gameObject.SetActive(true);
             tempAmmo.AddForce(direction * _force);
         }

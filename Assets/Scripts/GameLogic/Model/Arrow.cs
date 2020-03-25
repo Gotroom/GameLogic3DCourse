@@ -21,7 +21,12 @@ namespace Ermolaev_3D
                 }
                 Invoke(nameof(ReturnToPool), _destroyTimeAfterCollision);
             }
-            
+        }
+
+        public override void AddForce(Vector3 dir)
+        {
+            base.AddForce(dir);
+            Rigidbody.constraints = RigidbodyConstraints.None;
         }
     }
 }
