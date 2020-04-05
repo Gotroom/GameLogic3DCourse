@@ -13,6 +13,11 @@ namespace Ermolaev_3D
             _text = GetComponent<Text>();
         }
 
+        public void SetActive(bool value)
+        {
+            gameObject.SetActive(value);
+        }
+
         public float Text
         {
             set => _text.text = $"{value}";

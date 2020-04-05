@@ -5,6 +5,9 @@ namespace Ermolaev_3D
 {
     public sealed class GameController : MonoBehaviour
     {
+        public bool LoadRandomBots => _loadRandomBots;
+
+        [SerializeField] bool _loadRandomBots = false;
         private Controllers _controllers;
         private void Start()
         {

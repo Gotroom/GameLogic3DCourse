@@ -21,6 +21,7 @@ namespace Ermolaev_3D
 
         private Vector2 _mouseScroll;
         private int _mouseButton = (int)MouseButton.LeftButton;
+        private int _alternativeMouseButton = (int)MouseButton.RightButton;
 
         public InputController()
         {
@@ -84,6 +85,22 @@ namespace Ermolaev_3D
                 if (ServiceLocator.Resolve<WeaponController>().IsActive)
                 {
                     ServiceLocator.Resolve<WeaponController>().Release();
+                }
+            }
+
+            if (Input.GetMouseButtonDown(_alternativeMouseButton))
+            {
+                if (ServiceLocator.Resolve<WeaponController>().IsActive)
+                {
+                    ServiceLocator.Resolve<WeaponController>().TakeAim();
+                }
+            }
+
+            if (Input.GetMouseButtonUp(_alternativeMouseButton))
+            {
+                if (ServiceLocator.Resolve<WeaponController>().IsActive)
+                {
+                    ServiceLocator.Resolve<WeaponController>().CancelTakingAim();
                 }
             }
 

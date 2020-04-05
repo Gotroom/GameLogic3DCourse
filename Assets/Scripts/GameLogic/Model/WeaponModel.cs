@@ -5,8 +5,9 @@ namespace Ermolaev_3D
 {
     public abstract class WeaponModel : BaseObjectModel
     {
-        private int _maxCountAmmunition = 40;
-        private int _minCountAmmunition = 20;
+        [SerializeField] private int _maxCountAmmunition = 40;
+        [SerializeField] private int _minCountAmmunition = 20;
+
         private int _countClip = 5;
         public Ammunition Ammunition;
         public Clip Clip;

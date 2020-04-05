@@ -11,16 +11,19 @@ namespace Ermolaev_3D
 
         public void Initialization()
         {
-            for (var index = 0; index < _countBot; index++)
+            if (ServiceLocatorMonoBehaviour.GetService<GameController>().LoadRandomBots)
             {
-                var tempBot = UnityEngine.Object.Instantiate(Resources.Load<Bot>("Bot"),
-                    Patrol.GenericPoint(ServiceLocatorMonoBehaviour.GetService<CharacterController>().transform),
-                    Quaternion.identity);
+                for (var index = 0; index < _countBot; index++)
+                {
+                    var tempBot = UnityEngine.Object.Instantiate(Resources.Load<Bot>("Bot"),
+                        Patrol.GenericPoint(ServiceLocatorMonoBehaviour.GetService<CharacterController>().transform),
+                        Quaternion.identity);
 
-                tempBot.Agent.avoidancePriority = index;
-                tempBot.Target = ServiceLocatorMonoBehaviour.GetService<CharacterController>().transform;
-                //todo разных противников
-                AddBotToList(tempBot);
+                    tempBot.Agent.avoidancePriority = index;
+                    tempBot.Target = ServiceLocatorMonoBehaviour.GetService<CharacterController>().transform;
+                    //todo разных противников
+                    AddBotToList(tempBot);
+                }
             }
         }
 

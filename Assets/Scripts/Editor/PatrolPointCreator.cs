@@ -28,7 +28,7 @@ namespace Ermolaev_3D
                 if (Physics.Raycast(ray, out var hit))
                 {
                     var position = hit.point;
-                    position.y = AXIS_Y_POINT_OFFSET;
+                    position.y = hit.point.y + AXIS_Y_POINT_OFFSET;
                     _testTarget.InstantiateObj(position);
                     SetObjectDirty(_testTarget.gameObject);
                 }

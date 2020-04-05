@@ -46,6 +46,22 @@
             }
         }
 
+        public void TakeAim()
+        {
+            if (_weapon is AimableWeaponModel weapon)
+            {
+                ServiceLocator.Resolve<AimController>().ShowAiming(weapon);
+            }
+        }
+
+        public void CancelTakingAim()
+        {
+            if (_weapon is AimableWeaponModel weapon)
+            {
+                ServiceLocator.Resolve<AimController>().HideAiming(weapon);
+            }
+        }
+
         public void ReloadClip()
         {
             if (_weapon == null) return;

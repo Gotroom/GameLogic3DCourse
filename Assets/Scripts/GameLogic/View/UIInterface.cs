@@ -63,5 +63,50 @@ namespace Ermolaev_3D
                 return _healthUI;
             }
         }
+
+        private MinimapUI _minimapUI;
+
+        public MinimapUI MinimapUI
+        {
+            get
+            {
+                if (!_minimapUI)
+                    _minimapUI = Object.FindObjectOfType<MinimapUI>();
+                return _minimapUI;
+            }
+        }
+
+        private RadarUI _radarUI;
+
+        public RadarUI RadarUI
+        {
+            get
+            {
+                if (!_radarUI)
+                    _radarUI = Object.FindObjectOfType<RadarUI>();
+                return _radarUI;
+            }
+        }
+
+        private ViewFinderUI _viewFinderUI;
+
+        public ViewFinderUI ViewFinderUI
+        {
+            get
+            {
+                if (!_viewFinderUI)
+                    _viewFinderUI = Object.FindObjectOfType<ViewFinderUI>();
+                return _viewFinderUI;
+            }
+        }
+
+        public void SetActiveNonAim(bool value)
+        {
+            WeaponUiText.SetActive(value);
+            SelectionObjMessageUi.SetActive(value);
+            HealthUI.SetActive(value);
+            MinimapUI.SetActive(value);
+            RadarUI.SetActive(value);
+        }
     }
 }
