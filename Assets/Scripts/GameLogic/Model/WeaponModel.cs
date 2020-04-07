@@ -5,8 +5,9 @@ namespace Ermolaev_3D
 {
     public abstract class WeaponModel : BaseObjectModel
     {
-        private int _maxCountAmmunition = 40;
-        private int _minCountAmmunition = 20;
+        [SerializeField] private int _maxCountAmmunition = 40;
+        [SerializeField] private int _minCountAmmunition = 20;
+
         private int _countClip = 5;
         public Ammunition Ammunition;
         public Clip Clip;
@@ -28,14 +29,6 @@ namespace Ermolaev_3D
         {
             base.Awake();
             _bulletPool = new ObjectPool(Ammunition, _poolCount);
-            //_ammoPool = new List<Ammunition>();
-            //var rootObject = new GameObject(nameof(Ammunition));
-            //for (int i = 0; i < _poolCount; i++)
-            //{
-            //    var ammunition = Instantiate(Ammunition, Vector3.zero, Quaternion.identity, rootObject.transform);
-            //    ammunition.gameObject.SetActive(false);
-            //    _ammoPool.Add(ammunition);
-            //}
         }
 
         private void Start()

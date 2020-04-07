@@ -3,7 +3,7 @@
 
 namespace Ermolaev_3D
 {
-    public sealed class MovableEnemy : BaseEnemyController
+    public sealed class MovableEnemy : BaseEnemyModel
     {
         public float PullBackForce = 0.1f;
 

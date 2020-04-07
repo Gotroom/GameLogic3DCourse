@@ -9,15 +9,31 @@ namespace Ermolaev_3D
         private Transform _playerPos; // Позиция главного героя
         private readonly float mapScale = 2;
         public static List<RadarObject> RadObjects = new List<RadarObject>();
+
         private void Start()
         {
             _playerPos = Camera.main.transform;
         }
+
+        private void Update()
+        {
+            if (Time.frameCount % 2 == 0)
+            {
+                DrawRadarDots();
+            }
+        }
+
+        public void SetActive(bool value)
+        {
+            gameObject.SetActive(value);
+        }
+
         public static void RegisterRadarObject(GameObject o, Image i)
         {
             Image image = Instantiate(i);
             RadObjects.Add(new RadarObject { Owner = o, Icon = image });
         }
+
         public static void RemoveRadarObject(GameObject o)
         {
             List<RadarObject> newList = new List<RadarObject>();
@@ -33,6 +49,7 @@ namespace Ermolaev_3D
             RadObjects.RemoveRange(0, RadObjects.Count);
             RadObjects.AddRange(newList);
         }
+
         private void DrawRadarDots() // Синхронизирует значки на миникарте с реальными объектами
         {
             foreach (RadarObject radObject in RadObjects)
@@ -48,13 +65,6 @@ namespace Ermolaev_3D
                 radObject.Icon.transform.SetParent(transform);
                 radObject.Icon.transform.position = new Vector3(radarPos.x,
                                                         radarPos.z, 0) + transform.position;
-            }
-        }
-        private void Update()
-        {
-            if (Time.frameCount % 2 == 0)
-            {
-                DrawRadarDots();
             }
         }
     }

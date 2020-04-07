@@ -16,6 +16,7 @@ namespace Ermolaev_3D
             ServiceLocator.SetService(new PlayerController(motor));
             ServiceLocator.SetService(new FlashLightController());
             ServiceLocator.SetService(new WeaponController());
+            ServiceLocator.SetService(new AimController());
             ServiceLocator.SetService(new InputController());
             ServiceLocator.SetService(new SelectionController());
             ServiceLocator.SetService(new BotController());
@@ -48,6 +49,7 @@ namespace Ermolaev_3D
 
             ServiceLocator.Resolve<Inventory>().Initialization();
             ServiceLocator.Resolve<SaveLoadController>().Initialization();
+            ServiceLocator.Resolve<AimController>().Initialization();
             ServiceLocator.Resolve<InputController>().On();
             ServiceLocator.Resolve<SelectionController>().On();
             ServiceLocator.Resolve<PlayerController>().On();
