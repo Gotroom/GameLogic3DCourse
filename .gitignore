@@ -2,8 +2,6 @@
 /[Tt]emp/
 /[Oo]bj/
 /[Bb]uild/
-/[Pp]hoto/
-/[Pp]hoto.meta
 /[Bb]uilds/
 /[Ll]ogs/
 /[Uu]ser[Ss]ettings/
@@ -11,6 +9,7 @@
 /[Mm]emoryCaptures/
 
 !/[Aa]ssets/**/*.meta
+/[Aa]ssets/[Pp]hoto*
 
 /[Aa]ssets/Plugins/Editor/JetBrains*
 

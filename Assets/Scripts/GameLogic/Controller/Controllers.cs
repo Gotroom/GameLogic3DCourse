@@ -11,9 +11,9 @@ namespace Ermolaev_3D
 
         public Controllers()
         {
-            IMovable motor = new MovableObjectModel(ServiceLocatorMonoBehaviour.GetService<CharacterController>());
+            ServiceLocator.SetService(new PlayerModel(ServiceLocatorMonoBehaviour.GetService<CharacterController>()));
             ServiceLocator.SetService(new Inventory());
-            ServiceLocator.SetService(new PlayerController(motor));
+            ServiceLocator.SetService(new PlayerController(ServiceLocator.Resolve<PlayerModel>()));
             ServiceLocator.SetService(new FlashLightController());
             ServiceLocator.SetService(new WeaponController());
             ServiceLocator.SetService(new AimController());

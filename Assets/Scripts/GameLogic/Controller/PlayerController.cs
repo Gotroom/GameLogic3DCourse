@@ -8,7 +8,7 @@
         public PlayerController(IMovable motor)
         {
             _motor = motor;
-            _player = ServiceLocatorMonoBehaviour.GetService<PlayerModel>();
+            _player = ServiceLocator.Resolve<PlayerModel>();
         }
 
         public void Initialization()
