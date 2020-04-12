@@ -1,7 +1,4 @@
 ﻿using UnityEngine;
-using System;
-using System.Collections;
-
 
 namespace Ermolaev_3D
 {
@@ -9,115 +6,129 @@ namespace Ermolaev_3D
 
     public class TestIK : MonoBehaviour
     {
+        public bool IsActive = false;
+        public GameObject GrabingObject = null;
+        public Transform LookObj = null;
 
-        protected Animator animator;
+        public LayerMask RaycastLayer;
 
-        public bool ikActive = false;
-        public Transform rightHandObj = null;
-        public Transform lookObj = null;
+        public Vector3 LeftFootOffset;
+        public Vector3 RightFootOffset;
 
-        // Маска для Raycast'а, чтобы определять, на что мы можем ставить ноги
-        public LayerMask rayLayer;
+        [SerializeField] private float _weightLeftFoot;
+        [SerializeField] private float _weightRightFoot;
 
-        // Вес на контроллеры  IK ног из наших Curves
-        public float WeightFoot_L, WeightFoot_R;
+        private Animator _animator;
+        private Transform _rightFoot;
+        private Transform _leftFoot;
+        private Vector3 _leftFootPosition;
+        private Vector3 _rightFootPosition;
+        private Quaternion _rightFootRotation;
+        private Quaternion _leftFootRotation;
 
-        // Сохраняем Raycast hit позиции ног
-        private Vector3 footPosL, footPosR;
+        private GrabPoint _leftGrabPoint = null;
+        private GrabPoint _rightGrabPoint = null;
 
-        // Позиции ног
-        public Transform footR, footL;
-
-        // Отклонение (разница) модели и контроллеров
-        public Vector3 footLoffset, footRoffset;
-
-        void Start()
+        private void OnValidate()
         {
-            animator = GetComponent<Animator>();
+            _animator = GetComponent<Animator>();
+            _rightFoot = _animator.GetBoneTransform(HumanBodyBones.RightFoot);
+            _leftFoot = _animator.GetBoneTransform(HumanBodyBones.LeftFoot);
+            var grabPoints = GrabingObject.GetComponentsInChildren<GrabPoint>();
+            foreach (var point in grabPoints)
+            {
+                if (point.IsLeft)
+                {
+                    _leftGrabPoint = point;
+                }
+                else
+                {
+                    _rightGrabPoint = point;
+                }
+            }
+        }
+
+        private void Update()
+        {
+            if (Time.frameCount % 2 == 0)
+            {
+                var rightPos = _rightFoot.TransformPoint(Vector3.zero);
+                if (Physics.Raycast(rightPos, Vector3.down, out var rightHit, 1, RaycastLayer))
+                {
+                    _rightFootPosition = Vector3.Lerp(_rightFoot.position, rightHit.point, 0.5f);
+                    _rightFootRotation = Quaternion.FromToRotation(transform.up, rightHit.normal) * transform.rotation;
+                }
+            }
+            else
+            {
+                var leftPos = _leftFoot.TransformPoint(Vector3.zero);
+                if (Physics.Raycast(leftPos, Vector3.down, out var leftHit, 1, RaycastLayer))
+                {
+                    _leftFootPosition = Vector3.Lerp(_leftFoot.position, leftHit.point, 0.5f);
+                    _leftFootRotation = Quaternion.FromToRotation(transform.up, leftHit.normal) * transform.rotation;
+                }
+            }
         }
 
         void OnAnimatorIK()
         {
-            if (animator)
+            if (_animator)
             {
 
-                //Если, мы включили IK, устанавливаем позицию и вращение
-                if (ikActive)
+                if (IsActive)
                 {
-                    WeightFoot_R = animator.GetFloat("Right_Leg");
-                    WeightFoot_L = animator.GetFloat("Left_leg");
+                    _weightRightFoot = _animator.GetFloat("Right_Leg");
+                    _weightLeftFoot = _animator.GetFloat("Left_Leg");
 
-                    IegsIK();
+                    FootIK();
 
-                    // Устанавливаем цель взгляда для головы
-                    if (lookObj != null)
+                    if (LookObj != null)
                     {
-                        animator.SetLookAtWeight(1);
-                        animator.SetLookAtPosition(lookObj.position);
+                        _animator.SetLookAtWeight(1);
+                        _animator.SetLookAtPosition(LookObj.position);
                     }
 
-                    // Устанавливаем цель для правой руки и выставляем её в позицию
-                    if (rightHandObj != null)
+                    if (GrabingObject != null && _rightGrabPoint != null && _rightGrabPoint.IsVisible)
                     {
-                        animator.SetIKPositionWeight(AvatarIKGoal.RightHand, 1);
-                        animator.SetIKRotationWeight(AvatarIKGoal.RightHand, 1);
-                        animator.SetIKPosition(AvatarIKGoal.RightHand, rightHandObj.position);
-                        animator.SetIKRotation(AvatarIKGoal.RightHand, rightHandObj.rotation);
+                        _animator.SetIKPositionWeight(AvatarIKGoal.RightHand, 1);
+                        _animator.SetIKRotationWeight(AvatarIKGoal.RightHand, 1);
+                        _animator.SetIKPosition(AvatarIKGoal.RightHand, _rightGrabPoint.transform.position);
+                        _animator.SetIKRotation(AvatarIKGoal.RightHand, _rightGrabPoint.transform.rotation);
+                    }
+
+                    if (GrabingObject != null && _leftGrabPoint != null && _leftGrabPoint.IsVisible)
+                    {
+                        _animator.SetIKPositionWeight(AvatarIKGoal.LeftHand, 1);
+                        _animator.SetIKRotationWeight(AvatarIKGoal.LeftHand, 1);
+                        _animator.SetIKPosition(AvatarIKGoal.LeftHand, _leftGrabPoint.transform.position);
+                        _animator.SetIKRotation(AvatarIKGoal.LeftHand, _leftGrabPoint.transform.rotation);
                     }
                 }
-
-                // Если IK неактивен, ставим позицию и вращение рук и головы в изначальное положение
                 else
                 {
-                    animator.SetIKPositionWeight(AvatarIKGoal.RightHand, 0);
-                    animator.SetIKRotationWeight(AvatarIKGoal.RightHand, 0);
-                    animator.SetLookAtWeight(0);
+                    _animator.SetIKPositionWeight(AvatarIKGoal.RightHand, 0);
+                    _animator.SetIKRotationWeight(AvatarIKGoal.RightHand, 0);
+                    _animator.SetLookAtWeight(0);
                 }
             }
 
-            void IegsIK()
+            void FootIK()
             {
-                // Устанавливаем вес для контроллеров IK
-                animator.SetIKPositionWeight(AvatarIKGoal.LeftFoot, WeightFoot_L);
-                animator.SetIKRotationWeight(AvatarIKGoal.LeftFoot, WeightFoot_L);
-                animator.SetIKPositionWeight(AvatarIKGoal.RightFoot, WeightFoot_R);
-                animator.SetIKRotationWeight(AvatarIKGoal.RightFoot, WeightFoot_R);
+                _weightRightFoot = _animator.GetFloat("Right_Leg");
+                _weightLeftFoot = _animator.GetFloat("Left_Leg");
 
-                RaycastHit hit;
-                // Получаем текущее положение левой ноги
-                footPosL = animator.GetIKPosition(AvatarIKGoal.LeftFoot);
+                _animator.SetIKPositionWeight(AvatarIKGoal.LeftFoot, _weightLeftFoot);
+                _animator.SetIKPositionWeight(AvatarIKGoal.RightFoot, _weightRightFoot);
 
-                //[RayCast] От ноги на землю
-                if (Physics.Raycast(footPosL + Vector3.up, Vector3.down, out hit, 2.0f, rayLayer))
-                {
-                    // Чертим вспомогательные линии в редакторе
-                    Debug.DrawLine(hit.point, hit.point + hit.normal, Color.yellow);
+                _animator.SetIKRotationWeight(AvatarIKGoal.LeftFoot, _weightLeftFoot);
+                _animator.SetIKRotationWeight(AvatarIKGoal.RightFoot, _weightRightFoot);
 
-                    // Установка новой позиции IK
-                    animator.SetIKPosition(AvatarIKGoal.LeftFoot, hit.point + footLoffset);
+                _animator.SetIKPosition(AvatarIKGoal.LeftFoot, _leftFootPosition + new Vector3(0, LeftFootOffset.y, 0));
+                _animator.SetIKPosition(AvatarIKGoal.RightFoot, _rightFootPosition + new Vector3(0, RightFootOffset.y, 0));
 
-                    // Установка нового вращения IK
-                    animator.SetIKRotation(AvatarIKGoal.LeftFoot,
-                    Quaternion.LookRotation(Vector3.ProjectOnPlane(footL.forward,
-                    hit.normal), hit.normal));
+                _animator.SetIKRotation(AvatarIKGoal.LeftFoot, _leftFootRotation);
+                _animator.SetIKRotation(AvatarIKGoal.RightFoot, _rightFootRotation);
 
-                    // Сохраняем точку столкновения рейкаста
-                    footPosL = hit.point;
-                }
-
-                footPosR = animator.GetIKPosition(AvatarIKGoal.RightFoot);
-
-                if (Physics.Raycast(footPosR + Vector3.up, Vector3.down, out hit, 2.0f, rayLayer))
-                {
-                    animator.SetIKPosition(AvatarIKGoal.RightFoot,
-                    hit.point + footRoffset);
-
-                    animator.SetIKRotation(AvatarIKGoal.RightFoot,
-                    Quaternion.LookRotation(Vector3.ProjectOnPlane(footR.forward,
-                    hit.normal), hit.normal));
-
-                    footPosR = hit.point;
-                }
             }
         }
     }

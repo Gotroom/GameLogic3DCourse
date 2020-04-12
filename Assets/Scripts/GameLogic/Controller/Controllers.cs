@@ -11,6 +11,7 @@ namespace Ermolaev_3D
 
         public Controllers()
         {
+            ServiceLocator.SetService(new DayNightController());
             ServiceLocator.SetService(new PlayerModel(ServiceLocatorMonoBehaviour.GetService<CharacterController>()));
             ServiceLocator.SetService(new Inventory());
             ServiceLocator.SetService(new PlayerController(ServiceLocator.Resolve<PlayerModel>()));
@@ -22,17 +23,19 @@ namespace Ermolaev_3D
             ServiceLocator.SetService(new BotController());
             ServiceLocator.SetService(new SaveLoadController());
 
-            _executeControllers = new IExecutable[5];
+            _executeControllers = new IExecutable[6];
 
-            _executeControllers[0] = ServiceLocator.Resolve<PlayerController>();
+            _executeControllers[0] = ServiceLocator.Resolve<DayNightController>();
 
-            _executeControllers[1] = ServiceLocator.Resolve<FlashLightController>();
+            _executeControllers[1] = ServiceLocator.Resolve<PlayerController>();
 
-            _executeControllers[2] = ServiceLocator.Resolve<InputController>();
+            _executeControllers[2] = ServiceLocator.Resolve<FlashLightController>();
 
-            _executeControllers[3] = ServiceLocator.Resolve<SelectionController>();
+            _executeControllers[3] = ServiceLocator.Resolve<InputController>();
 
-            _executeControllers[4] = ServiceLocator.Resolve<BotController>();
+            _executeControllers[4] = ServiceLocator.Resolve<SelectionController>();
+
+            _executeControllers[5] = ServiceLocator.Resolve<BotController>();
         }
 
         public IExecutable this[int index] => _executeControllers[index];
