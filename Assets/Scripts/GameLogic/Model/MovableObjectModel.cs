@@ -4,16 +4,13 @@ using System.Collections;
 
 namespace Ermolaev_3D
 {
-    public class MovableObjectModel : IMovable
+    public abstract class MovableObjectModel : IMovable
     {
         private Transform _instance;
 
         private float _speedMove = 10;
         private float _jumpPower = 10;
-        private float _gravityForce;
-        private Vector2 _input;
         private Vector3 _moveVector;
-        private CharacterController _characterController;
         private Transform _head;
 
         public float XSensitivity = 2f;
@@ -23,6 +20,11 @@ namespace Ermolaev_3D
         public float MaximumX = 90F;
         public bool Smooth;
         public float SmoothTime = 5f;
+
+        protected CharacterController _characterController;
+        protected Vector2 _input;
+        protected float _gravityForce;
+
         private Quaternion _characterTargetRot;
         private Quaternion _cameraTargetRot;
 
@@ -44,7 +46,7 @@ namespace Ermolaev_3D
             LookRotation(_instance, _head);
         }
 
-        private void CharecterMove()
+        protected virtual void CharecterMove()
         {
             if (_characterController.isGrounded)
             {
@@ -58,14 +60,14 @@ namespace Ermolaev_3D
             _characterController.Move(_moveVector * Time.deltaTime);
         }
 
-        private void GamingGravity()
+        protected virtual void GamingGravity()
         {
             if (!_characterController.isGrounded) _gravityForce -= 30 * Time.deltaTime;
             else _gravityForce = -1;
             if (Input.GetKeyDown(KeyCode.Space) && _characterController.isGrounded) _gravityForce = _jumpPower;
         }
 
-        private void LookRotation(Transform character, Transform camera)
+        protected virtual void LookRotation(Transform character, Transform camera)
         {
             float yRot = Input.GetAxis("Mouse X") * XSensitivity;
             float xRot = Input.GetAxis("Mouse Y") * YSensitivity;
@@ -90,7 +92,7 @@ namespace Ermolaev_3D
             }
         }
 
-        private Quaternion ClampRotationAroundXAxis(Quaternion q)
+        protected Quaternion ClampRotationAroundXAxis(Quaternion q)
         {
             q.x /= q.w;
             q.y /= q.w;

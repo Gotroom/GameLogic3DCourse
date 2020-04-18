@@ -51,7 +51,7 @@ namespace Ermolaev_3D
             {
                 _temporaryTexture = _camera.targetTexture;
             }
-            _camera.targetTexture = RenderTexture.GetTemporary(Screen.width, Screen.width);
+            _camera.targetTexture = RenderTexture.GetTemporary(Screen.width, Screen.height);
             _isTakingScreenshot = true;
         }
     }
