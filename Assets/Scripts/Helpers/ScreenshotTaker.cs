@@ -7,7 +7,6 @@ namespace Ermolaev_3D
     {
 
         private Camera _camera;
-        private ViewFinderUI _viewFinder;
         private bool _isTakingScreenshot = false;
 
         private RenderTexture _temporaryTexture;
@@ -15,15 +14,6 @@ namespace Ermolaev_3D
         private void Awake()
         {
             _camera = GetComponent<Camera>();
-            _viewFinder = Object.FindObjectOfType<ViewFinderUI>();
-        }
-
-        private void Update()
-        {
-            if (!_viewFinder.gameObject.activeInHierarchy && !_isTakingScreenshot)
-            {
-                _viewFinder.SetActive(true);
-            }
         }
 
         private void OnPostRender()
@@ -40,7 +30,7 @@ namespace Ermolaev_3D
 
         public void TakeScreenShot()
         {
-            _viewFinder.SetActive(false);
+            FindObjectOfType<ViewFinderUI>().SetActive(false);
             _isTakingScreenshot = true;
         }
     }

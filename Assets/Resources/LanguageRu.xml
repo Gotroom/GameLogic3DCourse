@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Settings>
+
+	<group id="MainMenuItems">
+		<string id="NewGame">
+			<text>Новая игра</text>
+		</string>
+		
+		<string id="Options">
+			<text>Настройки</text>
+		</string>
+		
+		<string id="Quit">
+			<text>Выход</text>
+		</string>
+	</group>
+	
+</Settings>

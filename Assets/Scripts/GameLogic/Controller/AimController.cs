@@ -8,6 +8,7 @@ namespace Ermolaev_3D
 
         public void Initialization()
         {
+            Debug.Log("here");
             UiInterface.ViewFinderUI.SetActive(false);
         }
 

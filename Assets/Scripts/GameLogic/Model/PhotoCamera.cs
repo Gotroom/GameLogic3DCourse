@@ -17,6 +17,7 @@ namespace Ermolaev_3D
         private Light _flash;
         private PostProcessVolume _prostProcessVolume;
         private DepthOfField _depthOfField;
+        private ViewFinderUI _viewFinder;
 
         //Reference from Helios 44-2 Camera lens
         private enum RANGE
@@ -28,7 +29,8 @@ namespace Ermolaev_3D
         };
         private float[] DEPTH_OF_FIELD_VALUES = { 0.5f, 1.0f, 2.0f, 10.0f };
         private float[] DEPTH_OF_FIELD_DELTA = { 0.1f, 0.3f, 1.0f, 999.0f };
-        private RANGE _currentRange; 
+        private RANGE _currentRange;
+        private bool _isTakingAim = false;
 
         protected override void Awake()
         {
@@ -37,8 +39,17 @@ namespace Ermolaev_3D
             _screenshooter = GetComponentInChildren<ScreenshotTaker>();
             _prostProcessVolume = _viewFinderCamera.GetComponent<PostProcessVolume>();
             _prostProcessVolume.profile.TryGetSettings(out _depthOfField);
+            _viewFinder = Object.FindObjectOfType<ViewFinderUI>();
 
             _rechargeTime = 0.1f;
+        }
+
+        private void FixedUpdate()
+        {
+            if (!_viewFinder.gameObject.activeInHierarchy && _isTakingAim && _isReady)
+            {
+                _viewFinder.SetActive(true);
+            }
         }
 
         public override void Fire()
@@ -55,6 +66,7 @@ namespace Ermolaev_3D
 
         public override void TakeAim()
         {
+            _isTakingAim = true;
             _mainCamera.enabled = false;
             _texture = _viewFinderCamera.targetTexture;
             _viewFinderCamera.targetTexture = null;
@@ -62,6 +74,7 @@ namespace Ermolaev_3D
 
         public override void CancelTakingAim()
         {
+            _isTakingAim = false;
             _mainCamera.enabled = true;
             _viewFinderCamera.targetTexture = _texture;
         }
