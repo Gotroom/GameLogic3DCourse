@@ -30,5 +30,13 @@ namespace Ermolaev_3D
                 UiInterface.SetActiveNonAim(true);
             }
         }
+
+        public void ProcessScrollWheel(AimableWeaponModel weapon, bool isUp)
+        {
+            if (weapon is PhotoCamera camera)
+            {
+                camera.ProcessScrollWheel(isUp);
+            }
+        }
     }
 }

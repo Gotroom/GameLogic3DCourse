@@ -62,6 +62,14 @@
             }
         }
 
+        public void ProcessWheelScroll(bool isUp)
+        {
+            if (_weapon is AimableWeaponModel weapon)
+            {
+                ServiceLocator.Resolve<AimController>().ProcessScrollWheel(weapon, isUp);
+            }
+        }
+
         public void ReloadClip()
         {
             if (_weapon == null) return;
