@@ -8,6 +8,7 @@ namespace Ermolaev_3D
 
         public void Initialization()
         {
+            Debug.Log("here");
             UiInterface.ViewFinderUI.SetActive(false);
         }
 
@@ -28,6 +29,14 @@ namespace Ermolaev_3D
                 camera.CancelTakingAim();
                 UiInterface.ViewFinderUI.SetActive(false);
                 UiInterface.SetActiveNonAim(true);
+            }
+        }
+
+        public void ProcessScrollWheel(AimableWeaponModel weapon, bool isUp)
+        {
+            if (weapon is PhotoCamera camera)
+            {
+                camera.ProcessScrollWheel(isUp);
             }
         }
     }

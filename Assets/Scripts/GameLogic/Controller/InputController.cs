@@ -23,6 +23,8 @@ namespace Ermolaev_3D
         private int _mouseButton = (int)MouseButton.LeftButton;
         private int _alternativeMouseButton = (int)MouseButton.RightButton;
 
+        private bool _isTakingAim = false;
+
         public InputController()
         {
             Cursor.lockState = CursorLockMode.Locked;
@@ -57,11 +59,31 @@ namespace Ermolaev_3D
 
             if (_mouseScroll.y > Input.mouseScrollDelta.y)
             {
-                SelectPreviousWeapon();
+                if (_isTakingAim)
+                {
+                    if (ServiceLocator.Resolve<WeaponController>().IsActive)
+                    {
+                        ServiceLocator.Resolve<WeaponController>().ProcessWheelScroll(false);
+                    }
+                }
+                else
+                {
+                    SelectPreviousWeapon();
+                }
             }
             else if (_mouseScroll.y < Input.mouseScrollDelta.y)
             {
-                SelectNextWeapon();
+                if (_isTakingAim)
+                {
+                    if (ServiceLocator.Resolve<WeaponController>().IsActive)
+                    {
+                        ServiceLocator.Resolve<WeaponController>().ProcessWheelScroll(true);
+                    }
+                }
+                else
+                {
+                    SelectNextWeapon();
+                }
             }
 
             if (Input.GetMouseButton(_mouseButton))
@@ -92,15 +114,16 @@ namespace Ermolaev_3D
             {
                 if (ServiceLocator.Resolve<WeaponController>().IsActive)
                 {
-                    ServiceLocator.Resolve<WeaponController>().TakeAim();
-                }
-            }
-
-            if (Input.GetMouseButtonUp(_alternativeMouseButton))
-            {
-                if (ServiceLocator.Resolve<WeaponController>().IsActive)
-                {
-                    ServiceLocator.Resolve<WeaponController>().CancelTakingAim();
+                    if (_isTakingAim)
+                    {
+                        ServiceLocator.Resolve<WeaponController>().CancelTakingAim();
+                        _isTakingAim = false;
+                    }
+                    else
+                    {
+                        ServiceLocator.Resolve<WeaponController>().TakeAim();
+                        _isTakingAim = true;
+                    }
                 }
             }
 
