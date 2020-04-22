@@ -16,7 +16,8 @@ public class Interface : MonoBehaviour
     #region Object
     private MainMenu _mainMenu;
     private OptionsMenu _optionsMenu;
-    //private VideoOptions _videoOptions;
+    private VideoMenu _videoOptions;
+    private PauseMenu _pauseMenu;
     //private GameOptions _gameOptions;
     //private AudioOptions _audioOptions;
     //private MenuPause _menuPause;
@@ -27,7 +28,8 @@ public class Interface : MonoBehaviour
         InterfaceResources = GetComponent<InterfaceResources>();
         _mainMenu = GetComponent<MainMenu>();
         _optionsMenu = GetComponent<OptionsMenu>();
-        //_videoOptions = GetComponent<VideoOptions>();
+        _videoOptions = GetComponent<VideoMenu>();
+        _pauseMenu = GetComponent<PauseMenu>();
         //_gameOptions = GetComponent<GameOptions>();
         //_audioOptions = GetComponent<AudioOptions>();
         //_menuPause = GetComponent<MenuPause>();
@@ -55,10 +57,21 @@ public class Interface : MonoBehaviour
         switch (menuItem)
         {
             case InterfaceObject.MainMenu:
-                _currentMenu = _mainMenu;
+            {
+                if (_mainMenu)
+                    _currentMenu = _mainMenu;
+                else
+                    _currentMenu = _pauseMenu;
                 break;
+            }
             case InterfaceObject.OptionsMenu:
                 _currentMenu = _optionsMenu;
+                break;
+            case InterfaceObject.VideoOptions:
+                _currentMenu = _videoOptions;
+                break;
+            case InterfaceObject.MenuPause:
+                _currentMenu = _pauseMenu;
                 break;
             //case InterfaceObject.VideoOptions:
             // if (_currentMenu != null) _currentMenu.Hide();
@@ -98,12 +111,25 @@ public class Interface : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) && SceneManager.GetActiveScene().name != SceneManagerHelper.Instance.Scenes.MainMenu.SceneAsset.name)
         {
-            //
+            Time.timeScale = 0.0f;
+            Ermolaev_3D.ServiceLocator.Resolve<Ermolaev_3D.PlayerController>().Off();
+            Ermolaev_3D.ServiceLocator.Resolve<Ermolaev_3D.InputController>().Off();
+            Cursor.lockState = CursorLockMode.Confined;
+            Execute(InterfaceObject.MenuPause);
         }
     }
 
+    public void BackToGame()
+    {
+        _currentMenu.Hide();
+        _currentMenu = null;
+        Ermolaev_3D.ServiceLocator.Resolve<Ermolaev_3D.PlayerController>().On();
+        Ermolaev_3D.ServiceLocator.Resolve<Ermolaev_3D.InputController>().On();
+        Cursor.lockState = CursorLockMode.Locked;
+        Time.timeScale = 1.0f;
+    }
     #region ProgressBar
     public void ProgressBarSetValue(float value)
     {

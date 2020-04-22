@@ -15,4 +15,82 @@
 		</string>
 	</group>
 	
+	<group id="OptionsMenuItems">
+		<string id="Video">
+			<text>Видео</text>
+		</string>
+		
+		<string id="Sound">
+			<text>Звук</text>
+		</string>
+		
+		<string id="Game">
+			<text>Игра</text>
+		</string>
+		
+		<string id="Back">
+			<text>Назад</text>
+		</string>
+	</group>
+	
+	<group id="VideoMenuItems">
+		<string id="Header">
+			<text>Качество графики</text>
+		</string>
+		
+		<string id="Quality_0">
+			<text>Очень низкое</text>
+		</string>
+		
+		<string id="Quality_1">
+			<text>Низкое</text>
+		</string>
+		
+		<string id="Quality_2">
+			<text>Среднее</text>
+		</string>
+		
+		<string id="Quality_3">
+			<text>Высокое</text>
+		</string>
+		
+		<string id="Quality_4">
+			<text>Очень высокое</text>
+		</string>
+		
+		<string id="Quality_5">
+			<text>Невероятное</text>
+		</string>
+		
+		<string id="Back">
+			<text>Назад</text>
+		</string>
+	</group>
+	
+	<group id="PauseMenuItems">
+		<string id="Header">
+			<text>Пауза</text>
+		</string>
+		
+		<string id="Save">
+			<text>Сохранить</text>
+		</string>
+		
+		<string id="Load">
+			<text>Загрузить</text>
+		</string>
+		
+		<string id="Options">
+			<text>Настройки</text>
+		</string>
+		
+		<string id="Quit">
+			<text>Вернуться в главное меню</text>
+		</string>
+		
+		<string id="Back">
+			<text>Назад</text>
+		</string>
+	</group>
+	
 </Settings>

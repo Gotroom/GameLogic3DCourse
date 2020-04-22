@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
+public abstract class Singleton<T> : MonoBehaviour where T : MonoBehaviour
 {
 	private static T _instance;
 	private static object _lock = new object();
@@ -41,6 +41,7 @@ public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
 			}
 		}
 	}
+    public abstract bool Check();
 	public void OnDestroy()
 	{
 		_applicationIsQuitting = true;
