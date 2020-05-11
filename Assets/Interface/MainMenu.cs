@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class MainMenu : BaseMenu
+public sealed class MainMenu : BaseMenu
 {
 
     [SerializeField] private GameObject _mainPanale;
@@ -22,7 +22,10 @@ public class MainMenu : BaseMenu
         //_continue.GetText.text = LangManager.Instance.Text("MainMenuItems", "Continue");
         //_continue.SetInteractable(false);
         _options.GetText.text = LangManager.Instance.Text("MainMenuItems", "Options");
-        _options.SetInteractable(false);
+        _options.GetControl.onClick.AddListener(delegate
+        {
+            ShowOptions();
+        });
 
         _quit.GetText.text = LangManager.Instance.Text("MainMenuItems", "Quit");
         _quit.GetControl.onClick.AddListener(delegate

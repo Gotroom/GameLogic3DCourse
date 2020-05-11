@@ -11,7 +11,7 @@ public class InterfaceResources : MonoBehaviour {
     {
         ButtonPrefab = Resources.Load<ButtonUi>("Button");
         MainCanvas = FindObjectOfType<Canvas>();
-        ProgressbarPrefab = Resources.Load<SliderUI>("Progressbar");
+        ProgressbarPrefab = Resources.Load<SliderUI>("ProgressBar");
         MainPanel = MainCanvas.GetComponentInChildren<LayoutGroup>();
     }
 }

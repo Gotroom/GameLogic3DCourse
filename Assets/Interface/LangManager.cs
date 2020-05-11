@@ -56,4 +56,9 @@ public class LangManager : Singleton<LangManager>
         return Resources.Load(LocalizeResourceName(resourceName),
         typeof(TextAsset)) as TextAsset;
     }
+
+    public override bool Check()
+    {
+        return true;
+    }
 }

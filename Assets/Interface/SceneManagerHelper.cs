@@ -10,4 +10,11 @@ public class SceneManagerHelper :  Singleton<SceneManagerHelper>
     }
 
     public SceneDate Scenes;
+
+    public override bool Check()
+    {
+        if (Scenes.Game != null && Scenes.MainMenu != null)
+            return true;
+        return false;
+    }
 }
