@@ -1,34 +1,37 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class TextUI : MonoBehaviour, IControlText
+namespace Ermolaev_3D
 {
-    private Text _text;
-
-    public Text GetText
+    public class TextUI : MonoBehaviour, IControlText
     {
-        get
+        private Text _text;
+
+        public Text GetText
         {
-            if (!_text)
+            get
             {
-                _text = transform.GetComponent<Text>();
+                if (!_text)
+                {
+                    _text = transform.GetComponent<Text>();
+                }
+                return _text;
             }
-            return _text;
         }
-    }
-    public Dropdown GetControl
-    {
-        get
+        public Dropdown GetControl
         {
-            return null;
+            get
+            {
+                return null;
+            }
         }
-    }
 
-    public void SetInteractable(bool value)
-    {
-        GetControl.interactable = value;
-    }
+        public void SetInteractable(bool value)
+        {
+            GetControl.interactable = value;
+        }
 
-    public GameObject Instance => gameObject;
-    public Selectable Control => GetControl;
+        public GameObject Instance => gameObject;
+        public Selectable Control => GetControl;
+    } 
 }

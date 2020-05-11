@@ -31,9 +31,7 @@ namespace Ermolaev_3D
 
         private void OnValidate()
         {
-            _animator = GetComponent<Animator>();
-            _rightFoot = _animator.GetBoneTransform(HumanBodyBones.RightFoot);
-            _leftFoot = _animator.GetBoneTransform(HumanBodyBones.LeftFoot);
+            GetAnimationBones();
             var grabPoints = GrabingObject.GetComponentsInChildren<GrabPoint>();
             foreach (var point in grabPoints)
             {
@@ -50,6 +48,10 @@ namespace Ermolaev_3D
 
         private void Update()
         {
+            if (_rightFoot == null || _leftFoot == null || _animator == null)
+            {
+                GetAnimationBones();
+            }
             if (Time.frameCount % 2 == 0)
             {
                 var rightPos = _rightFoot.TransformPoint(Vector3.zero);
@@ -68,6 +70,13 @@ namespace Ermolaev_3D
                     _leftFootRotation = Quaternion.FromToRotation(transform.up, leftHit.normal) * transform.rotation;
                 }
             }
+        }
+
+        void GetAnimationBones()
+        {
+            _animator = GetComponent<Animator>();
+            _rightFoot = _animator.GetBoneTransform(HumanBodyBones.RightFoot);
+            _leftFoot = _animator.GetBoneTransform(HumanBodyBones.LeftFoot);
         }
 
         void OnAnimatorIK()

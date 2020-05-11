@@ -138,6 +138,7 @@ namespace Ermolaev_3D
 
         public void Tick()
         {
+            if (!Agent) return;
             if (BotStates == BotStates.Died) return;
 
             if (BotStates != BotStates.Detected)
@@ -165,10 +166,8 @@ namespace Ermolaev_3D
                 }
                 var pos = Target.position;
                 pos.y += 0.75f;
-                Debug.DrawLine(transform.position, pos, Color.red);
                 if (Vision.VisionM(transform, Target))
                 {
-                    print("GOt it");
                     SetDetected();
                 }
             }

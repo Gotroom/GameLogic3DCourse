@@ -1,6 +1,9 @@
-﻿namespace Ermolaev_3D
+﻿using System;
+
+
+namespace Ermolaev_3D
 {
-    public abstract class BaseController
+    public abstract class BaseController : IDisposable
     {
         protected UIInterface UiInterface;
         protected BaseController()
@@ -35,6 +38,11 @@
             {
                 Off();
             }
+        }
+
+        public void Dispose()
+        {
+            GC.SuppressFinalize(this);
         }
     }
 }

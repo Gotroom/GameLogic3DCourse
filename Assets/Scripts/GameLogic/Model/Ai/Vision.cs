@@ -11,7 +11,6 @@ namespace Ermolaev_3D
 
         public bool VisionM(Transform player, Transform target)
         {
-            DebugWrap.Log((Distance(player, target)).ToString() + " " + (Angle(player, target)).ToString() + " " + (CheckBloked(player, target)).ToString());
             return Distance(player, target) && Angle(player, target) && !CheckBloked(player, target);
         }
 
