@@ -12,7 +12,7 @@ public class Interface : MonoBehaviour
     private BaseMenu _currentMenu;
 
     private Stack<InterfaceObject> _interfaceObjects = new Stack<InterfaceObject>(); // dz
-
+    private bool _inMenu = false;
     #region Object
     private MainMenu _mainMenu;
     private OptionsMenu _optionsMenu;
@@ -113,12 +113,26 @@ public class Interface : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape) && SceneManager.GetActiveScene().name != SceneManagerHelper.Instance.Scenes.MainMenu.SceneAsset.name)
         {
-            Time.timeScale = 0.0f;
-            Ermolaev_3D.ServiceLocator.Resolve<Ermolaev_3D.PlayerController>().Off();
-            Ermolaev_3D.ServiceLocator.Resolve<Ermolaev_3D.InputController>().Off();
-            Cursor.lockState = CursorLockMode.Confined;
-            Execute(InterfaceObject.MenuPause);
+            if (_inMenu)
+            {
+                _inMenu = false;
+                BackToGame();
+            }
+            else
+            {
+                _inMenu = true;
+                InGameMenu();
+            }
         }
+    }
+
+    private void InGameMenu()
+    {
+        Time.timeScale = 0.0f;
+        Ermolaev_3D.ServiceLocator.Resolve<Ermolaev_3D.PlayerController>().Off();
+        Ermolaev_3D.ServiceLocator.Resolve<Ermolaev_3D.InputController>().Off();
+        Cursor.lockState = CursorLockMode.Confined;
+        Execute(InterfaceObject.MenuPause);
     }
 
     public void BackToGame()

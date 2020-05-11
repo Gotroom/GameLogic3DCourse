@@ -6,7 +6,7 @@ namespace Ermolaev_3D
 {
     public sealed class BotController : BaseController, IExecutable, IInitializable
     {
-        private readonly int _countBot = 4;
+        private readonly int _countBot = 5;
         private readonly HashSet<Bot> _getBotList = new HashSet<Bot>();
 
         public void Initialization()
@@ -15,7 +15,7 @@ namespace Ermolaev_3D
             {
                 for (var index = 0; index < _countBot; index++)
                 {
-                    var tempBot = UnityEngine.Object.Instantiate(Resources.Load<Bot>("Bot"),
+                    var tempBot = UnityEngine.Object.Instantiate(Resources.Load<Bot>("Wolf"),
                         Patrol.GenericPoint(ServiceLocatorMonoBehaviour.GetService<CharacterController>().transform),
                         Quaternion.identity);
 
@@ -69,7 +69,7 @@ namespace Ermolaev_3D
             {
                 var botData = botsSaveData[index];
                 var botPosition = new Vector3(botData.Pos.X, botData.Pos.Y, botData.Pos.Y);
-                var tempBot = Object.Instantiate(Resources.Load<Bot>("Bot"),
+                var tempBot = Object.Instantiate(Resources.Load<Bot>("Wolf"),
                     botPosition,
                     Quaternion.identity);
 

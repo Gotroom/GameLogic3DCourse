@@ -7,15 +7,17 @@ namespace Ermolaev_3D
     {
         public float ActiveDis = 10;
         public float ActiveAng = 35;
+        public LayerMask Layers;
 
         public bool VisionM(Transform player, Transform target)
         {
+            DebugWrap.Log((Distance(player, target)).ToString() + " " + (Angle(player, target)).ToString() + " " + (CheckBloked(player, target)).ToString());
             return Distance(player, target) && Angle(player, target) && !CheckBloked(player, target);
         }
 
         private bool CheckBloked(Transform player, Transform target)
         {
-            if (!Physics.Linecast(player.position, target.position, out var hit)) return true;
+            if (!Physics.Linecast(player.position, target.position, out var hit, Layers)) return true;
             return hit.transform != target;
         }
 
@@ -26,8 +28,10 @@ namespace Ermolaev_3D
         }
 
         private bool Distance(Transform player, Transform target)
-        { 
-            var dist = Vector3.Distance(player.position, target.position); //todo оптимизация
+        {
+            var pos = target.position;
+            pos.y += 2;
+            var dist = Vector3.Distance(player.position, pos); //todo оптимизация
             return dist <= ActiveDis;
         }
     }

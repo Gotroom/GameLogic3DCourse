@@ -10,12 +10,19 @@ namespace Ermolaev_3D
         public WeaponModel Weapon; //todo с разным оружием 
         public Transform Target { get; set; }
         public NavMeshAgent Agent { get; private set; }
+        public bool UsesWeapon = false;
         public float DetectionCooldown = 5.0f;
-        private float _waitTime = 3;
         private BotStates _stateBot;
         private Vector3 _point;
+        private Animator _animator;
+        private float _waitTime = 3;
         private float _stoppingDistance = 2.0f;
         private float _detectionTime = 0.0f;
+
+        private static readonly int _idle = Animator.StringToHash("IsIdle");
+        private static readonly int _run = Animator.StringToHash("IsRunning");
+        private static readonly int _walk = Animator.StringToHash("IsWalking");
+        private static readonly int _site = Animator.StringToHash("IsSite");
 
         private BotStates BotStates
         {
@@ -26,16 +33,56 @@ namespace Ermolaev_3D
                 switch (value)
                 {
                     case BotStates.None:
-                        Color = Color.white;
+                        if (_animator)
+                        {
+                            _animator.SetBool(_idle, true);
+                            _animator.SetBool(_run, false);
+                            _animator.SetBool(_walk, false);
+                            _animator.SetBool(_site, false);
+                        }
+                        else
+                        {
+                            Color = Color.white;
+                        }
                         break;
                     case BotStates.Patrol:
-                        Color = Color.green;
+                        if (_animator)
+                        {
+                            _animator.SetBool(_idle, false);
+                            _animator.SetBool(_run, false);
+                            _animator.SetBool(_walk, true);
+                            _animator.SetBool(_site, false);
+                        }
+                        else
+                        {
+                            Color = Color.green;
+                        }
                         break;
                     case BotStates.Inspection:
-                        Color = Color.yellow;
+                        if (_animator)
+                        {
+                            _animator.SetBool(_idle, false);
+                            _animator.SetBool(_run, false);
+                            _animator.SetBool(_walk, false);
+                            _animator.SetBool(_site, true);
+                        }
+                        else
+                        {
+                            Color = Color.yellow;
+                        }
                         break;
                     case BotStates.Detected:
-                        Color = Color.red;
+                        if (_animator)
+                        {
+                            _animator.SetBool(_idle, false);
+                            _animator.SetBool(_run, true);
+                            _animator.SetBool(_walk, false);
+                            _animator.SetBool(_site, false);
+                        }
+                        else
+                        {
+                            Color = Color.red;
+                        }
                         break;
                     case BotStates.Died:
                         Color = Color.gray;
@@ -52,6 +99,7 @@ namespace Ermolaev_3D
         {
             base.Awake();
             Agent = GetComponent<NavMeshAgent>();
+            _animator = GetComponent<Animator>();
         }
 
         private void OnEnable()
@@ -115,9 +163,12 @@ namespace Ermolaev_3D
                         }
                     }
                 }
-
+                var pos = Target.position;
+                pos.y += 0.75f;
+                Debug.DrawLine(transform.position, pos, Color.red);
                 if (Vision.VisionM(transform, Target))
                 {
+                    print("GOt it");
                     SetDetected();
                 }
             }
@@ -129,9 +180,16 @@ namespace Ermolaev_3D
                 }
                 if (Vision.VisionM(transform, Target))
                 {
-                    if (Weapon.Clip.CountAmmunition <= 0)
-                        Weapon.ReloadClip();
-                    Weapon.Fire();
+                    if (UsesWeapon)
+                    {
+                        if (Weapon.Clip.CountAmmunition <= 0)
+                            Weapon.ReloadClip();
+                        Weapon.Fire();
+                    }
+                    else
+                    {
+
+                    }
                     _detectionTime = 0.0f;
                 }
                 else

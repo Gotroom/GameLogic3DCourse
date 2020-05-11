@@ -21,7 +21,11 @@ public abstract class Singleton<T> : MonoBehaviour where T : MonoBehaviour
 					_instance = (T)FindObjectOfType(typeof(T));
 					if (FindObjectsOfType(typeof(T)).Length > 1)
 					{
-
+                        var singletonClones = FindObjectsOfType(typeof(T));
+                        for (int i = 1; i < singletonClones.Length; i++)
+                        {
+                            DestroyImmediate(singletonClones[i]);
+                        }
 						return _instance;
 					}
 					if (_instance == null)

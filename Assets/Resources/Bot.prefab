@@ -106,12 +106,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b47491478d0bc349bd3abde3d0729a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _maxCountAmmunition: 40
+  _minCountAmmunition: 20
   Ammunition: {fileID: 7059905001348987788, guid: bd59d5bb2c66f7e409f3f602f02cbea0,
     type: 3}
   AmmunitionTypes: 02000000
   _barrel: {fileID: 1502495637420150540}
   _force: 999
   _rechargeTime: 0.2
+  _poolCount: 300
 --- !u!1 &1502495636552543875
 GameObject:
   m_ObjectHideFlags: 0
@@ -293,7 +296,11 @@ MonoBehaviour:
   Vision:
     ActiveDis: 30
     ActiveAng: 90
+    Layers:
+      serializedVersion: 2
+      m_Bits: 256
   Weapon: {fileID: 1502495636506851045}
+  UsesWeapon: 0
   DetectionCooldown: 5
 --- !u!114 &-3069928952181300023
 MonoBehaviour:
@@ -307,7 +314,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7e26773b1579b2439ef0a9bb7ab3183, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _ico: {fileID: 0}
+  _ico: {fileID: 5942307100773141712, guid: 1b1a75b13a198bc499a89b6bc535b968, type: 3}
 --- !u!1 &1502495637420150543
 GameObject:
   m_ObjectHideFlags: 0

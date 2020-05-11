@@ -11,6 +11,11 @@ public class SceneManagerHelper :  Singleton<SceneManagerHelper>
 
     public SceneDate Scenes;
 
+    private void Awake()
+    {
+        DontDestroyOnLoad(this);
+    }
+
     public override bool Check()
     {
         if (Scenes.Game != null && Scenes.MainMenu != null)

@@ -10,12 +10,14 @@ namespace Ermolaev_3D
         public void Initialization()
         {
             var sunResource = Resources.Load<GameObject>("Sun");
-            _sun = GameObject.Instantiate(sunResource, Vector3.zero, Quaternion.identity);
+            Quaternion angle = Quaternion.identity;
+            angle.x = 2.0f;
+            _sun = GameObject.Instantiate(sunResource, Vector3.zero, angle);
         }
 
         public void Execute()
         {
-            _sun.transform.Rotate(2.0f * Time.deltaTime, 0.0f, 0.0f);
+            _sun.transform.Rotate(0.5f * Time.deltaTime, 0.0f, 0.0f);
         }
     }
 }
