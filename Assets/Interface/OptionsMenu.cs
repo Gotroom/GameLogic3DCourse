@@ -2,71 +2,74 @@
 using UnityEngine.EventSystems;
 
 
-public sealed class OptionsMenu : BaseMenu
+namespace Ermolaev_3D
 {
-    [SerializeField] private GameObject _optionsPanele;
-
-    [SerializeField] private ButtonUi _video;
-    [SerializeField] private ButtonUi _sound;
-    [SerializeField] private ButtonUi _game;
-    [SerializeField] private ButtonUi _back;
-
-    private void Start()
+    public sealed class OptionsMenu : BaseMenu
     {
-        _video.GetText.text = LangManager.Instance.Text("OptionsMenuItems", "Video");
-        _video.GetControl.onClick.AddListener(delegate
+        [SerializeField] private GameObject _optionsPanele;
+
+        [SerializeField] private ButtonUi _video;
+        [SerializeField] private ButtonUi _sound;
+        [SerializeField] private ButtonUi _game;
+        [SerializeField] private ButtonUi _back;
+
+        private void Start()
         {
-            LoadVideoOptions();
-        });
+            _video.GetText.text = LangManager.Instance.Text("OptionsMenuItems", "Video");
+            _video.GetControl.onClick.AddListener(delegate
+            {
+                LoadVideoOptions();
+            });
 
-        _sound.GetText.text = LangManager.Instance.Text("OptionsMenuItems", "Sound");
-        _sound.GetControl.onClick.AddListener(delegate
+            _sound.GetText.text = LangManager.Instance.Text("OptionsMenuItems", "Sound");
+            _sound.GetControl.onClick.AddListener(delegate
+            {
+                LoadSoundOptions();
+            });
+
+            _game.GetText.text = LangManager.Instance.Text("OptionsMenuItems", "Game");
+            _game.GetControl.onClick.AddListener(delegate
+            {
+                LoadGameOptions();
+            });
+
+            _back.GetText.text = LangManager.Instance.Text("OptionsMenuItems", "Back");
+            _back.GetControl.onClick.AddListener(delegate
+            {
+                Back();
+            });
+        }
+
+        public override void Hide()
         {
-            LoadSoundOptions();
-        });
+            if (!IsShow) return;
+            _optionsPanele.gameObject.SetActive(false);
+            IsShow = false;
+        }
 
-        _game.GetText.text = LangManager.Instance.Text("OptionsMenuItems", "Game");
-        _game.GetControl.onClick.AddListener(delegate
+        public override void Show()
         {
-            LoadGameOptions();
-        });
+            if (IsShow) return;
+            _optionsPanele.gameObject.SetActive(true);
+            IsShow = true;
+        }
 
-        _back.GetText.text = LangManager.Instance.Text("OptionsMenuItems", "Back");
-        _back.GetControl.onClick.AddListener(delegate
+        private void LoadVideoOptions()
         {
-            Back();
-        });
-    }
+            Interface.Execute(InterfaceObject.VideoOptions);
 
-    public override void Hide()
-    {
-        if (!IsShow) return;
-        _optionsPanele.gameObject.SetActive(false);
-        IsShow = false;
-    }
-
-    public override void Show()
-    {
-        if (IsShow) return;
-        _optionsPanele.gameObject.SetActive(true);
-        IsShow = true;
-    }
-
-    private void LoadVideoOptions()
-	{
-		Interface.Execute(InterfaceObject.VideoOptions);
-		
-	}
-	private void LoadSoundOptions()
-	{
-		Interface.Execute(InterfaceObject.AudioOptions);
-	}
-	private void LoadGameOptions()
-	{
-		Interface.Execute(InterfaceObject.GameOptions);
-	}
-	private void Back()
-	{
-		Interface.Execute(InterfaceObject.MainMenu);
-	}
+        }
+        private void LoadSoundOptions()
+        {
+            Interface.Execute(InterfaceObject.AudioOptions);
+        }
+        private void LoadGameOptions()
+        {
+            Interface.Execute(InterfaceObject.GameOptions);
+        }
+        private void Back()
+        {
+            Interface.Execute(InterfaceObject.MainMenu);
+        }
+    } 
 }

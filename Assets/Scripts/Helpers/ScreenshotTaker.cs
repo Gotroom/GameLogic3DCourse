@@ -30,7 +30,9 @@ namespace Ermolaev_3D
 
         public void TakeScreenShot()
         {
-            FindObjectOfType<ViewFinderUI>().SetActive(false);
+            var viewFinder = FindObjectOfType<ViewFinderUI>();
+            if (viewFinder != null)
+                viewFinder.SetActive(false);
             _isTakingScreenshot = true;
         }
     }

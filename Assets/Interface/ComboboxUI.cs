@@ -3,38 +3,41 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 
 
-public sealed class ComboboxUI : MonoBehaviour, IControlOptions
+namespace Ermolaev_3D
 {
+    public sealed class ComboboxUI : MonoBehaviour, IControlOptions
+    {
 
-    private Text _text;
-    private Dropdown _dropdown;
+        private Text _text;
+        private Dropdown _dropdown;
 
-    public List<Dropdown.OptionData> GetOptions
-    {
-        get
+        public List<Dropdown.OptionData> GetOptions
         {
-            if (!_dropdown)
+            get
             {
-                _dropdown = transform.GetComponentInChildren<Dropdown>();
+                if (!_dropdown)
+                {
+                    _dropdown = transform.GetComponentInChildren<Dropdown>();
+                }
+                return _dropdown.options;
             }
-            return _dropdown.options;
         }
-    }
-    public Dropdown GetControl
-    {
-        get
+        public Dropdown GetControl
         {
-            if (!_dropdown)
+            get
             {
-                _dropdown = transform.GetComponentInChildren<Dropdown>();
+                if (!_dropdown)
+                {
+                    _dropdown = transform.GetComponentInChildren<Dropdown>();
+                }
+                return _dropdown;
             }
-            return _dropdown;
         }
+        public void SetInteractable(bool value)
+        {
+            GetControl.interactable = value;
+        }
+        public GameObject Instance => gameObject;
+        public Selectable Control => GetControl;
     }
-    public void SetInteractable(bool value)
-    {
-        GetControl.interactable = value;
-    }
-    public GameObject Instance => gameObject;
-    public Selectable Control => GetControl;
 }

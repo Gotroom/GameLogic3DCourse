@@ -22,5 +22,10 @@ namespace Ermolaev_3D
                 _controllers[i].Execute();
             }
         }
+
+        private void OnDisable()
+        {
+            _controllers.Dispose();
+        }
     }
 }

@@ -1,14 +1,17 @@
 ﻿using UnityEngine;
 
-public abstract class BaseMenu : MonoBehaviour
+namespace Ermolaev_3D
 {
-    protected bool IsShow { get;   set; }
-    protected Interface Interface;
-    protected virtual void Awake()
+    public abstract class BaseMenu : MonoBehaviour
     {
-        Interface = FindObjectOfType<Interface>();
-    }
+        protected bool IsShow { get; set; }
+        protected Interface Interface;
+        protected virtual void Awake()
+        {
+            Interface = FindObjectOfType<Interface>();
+        }
 
-    public abstract void Hide();
-    public abstract void Show();
+        public abstract void Hide();
+        public abstract void Show();
+    }
 }

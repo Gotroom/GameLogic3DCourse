@@ -2,98 +2,111 @@
 using UnityEngine.SceneManagement;
 
 
-public class PauseMenu : BaseMenu
+namespace Ermolaev_3D
 {
-    [SerializeField] private GameObject _pausePanel;
-
-    [SerializeField] private TextUI _header;
-    [SerializeField] private ButtonUi _save;
-    [SerializeField] private ButtonUi _load;
-    [SerializeField] private ButtonUi _options;
-    [SerializeField] private ButtonUi _quitToMenu;
-    [SerializeField] private ButtonUi _back;
-
-    private void Start()
+    public class PauseMenu : BaseMenu
     {
-        _header.GetText.text = LangManager.Instance.Text("PauseMenuItems", "Header");
+        private const int MAIN_MENU_BUILD_INDEX = 0;
 
-        _save.GetText.text = LangManager.Instance.Text("PauseMenuItems", "Save");
-        _save.GetControl.onClick.AddListener(delegate
+        [SerializeField] private GameObject _pausePanel;
+
+        [SerializeField] private TextUI _header;
+        [SerializeField] private ButtonUi _save;
+        [SerializeField] private ButtonUi _load;
+        [SerializeField] private ButtonUi _options;
+        [SerializeField] private ButtonUi _quitToMenu;
+        [SerializeField] private ButtonUi _back;
+
+        private void Start()
         {
-            Save();
-        });
-        _save.SetInteractable(false);
+            _header.GetText.text = LangManager.Instance.Text("PauseMenuItems", "Header");
 
-        _load.GetText.text = LangManager.Instance.Text("PauseMenuItems", "Load");
-        _load.GetControl.onClick.AddListener(delegate
+            _save.GetText.text = LangManager.Instance.Text("PauseMenuItems", "Save");
+            _save.GetControl.onClick.AddListener(delegate
+            {
+                Save();
+            });
+            _save.SetInteractable(false);
+
+            _load.GetText.text = LangManager.Instance.Text("PauseMenuItems", "Load");
+            _load.GetControl.onClick.AddListener(delegate
+            {
+                Load();
+            });
+            _load.SetInteractable(false);
+
+            _options.GetText.text = LangManager.Instance.Text("PauseMenuItems", "Options");
+            _options.GetControl.onClick.AddListener(delegate
+            {
+                ShowOptions();
+            });
+
+            _quitToMenu.GetText.text = LangManager.Instance.Text("PauseMenuItems", "Quit");
+            _quitToMenu.GetControl.onClick.AddListener(delegate
+            {
+                LoadMainMenu();
+            });
+
+            _back.GetText.text = LangManager.Instance.Text("PauseMenuItems", "Back");
+            _back.GetControl.onClick.AddListener(delegate
+            {
+                Back();
+            });
+        }
+
+        public override void Hide()
         {
-            Load();
-        });
-        _load.SetInteractable(false);
+            if (!IsShow) return;
+            _pausePanel.gameObject.SetActive(false);
+            IsShow = false;
+        }
 
-        _options.GetText.text = LangManager.Instance.Text("PauseMenuItems", "Options");
-        _options.GetControl.onClick.AddListener(delegate
+        public override void Show()
         {
-            ShowOptions();
-        });
+            if (IsShow) return;
+            _pausePanel.gameObject.SetActive(true);
+            IsShow = true;
+        }
 
-        _quitToMenu.GetText.text = LangManager.Instance.Text("PauseMenuItems", "Quit");
-        _quitToMenu.GetControl.onClick.AddListener(delegate
+        private void Load()
         {
-            LoadMainMenu(SceneManagerHelper.Instance.Scenes.MainMenu.SceneAsset.name);
-        });
+            //todo
+        }
 
-        _back.GetText.text = LangManager.Instance.Text("PauseMenuItems", "Back");
-        _back.GetControl.onClick.AddListener(delegate
+        private void Save()
         {
-            Back();
-        });
-    }
+            //todo
+        }
 
-    public override void Hide()
-    {
-        if (!IsShow) return;
-        _pausePanel.gameObject.SetActive(false);
-        IsShow = false;
-    }
+        private void ShowOptions()
+        {
+            Interface.Execute(InterfaceObject.OptionsMenu);
+        }
 
-    public override void Show()
-    {
-        if (IsShow) return;
-        _pausePanel.gameObject.SetActive(true);
-        IsShow = true;
-    }
+        private void LoadMainMenu()
+        {
+            SceneManager.sceneLoaded += SceneManagerOnSceneLoaded;
+            if (SceneManagerHelper.Instance.Check())
+            {
+                Interface.LoadSceneAsync(SceneManagerHelper.Instance.Scenes.MainMenu.name);
+            }
+            else
+            {
+                string pathToScene = SceneUtility.GetScenePathByBuildIndex(MAIN_MENU_BUILD_INDEX);
+                string sceneName = System.IO.Path.GetFileNameWithoutExtension(pathToScene);
+                Interface.LoadSceneAsync(sceneName);
+            }
+        }
 
-    private void Load()
-    {
-        //todo
-    }
+        private void SceneManagerOnSceneLoaded(Scene arg0, LoadSceneMode arg1)
+        {
+            // init game
+            SceneManager.sceneLoaded -= SceneManagerOnSceneLoaded;
+        }
 
-    private void Save()
-    {
-        //todo
-    }
-
-    private void ShowOptions()
-    {
-        Interface.Execute(InterfaceObject.OptionsMenu);
-    }
-
-    private void LoadMainMenu(string lvl)
-    {
-        SceneManager.sceneLoaded += SceneManagerOnSceneLoaded;
-        Interface.LoadSceneAsync(lvl);
-    }
-
-    private void SceneManagerOnSceneLoaded(Scene arg0, LoadSceneMode arg1)
-    {
-        // init game
-
-        SceneManager.sceneLoaded -= SceneManagerOnSceneLoaded;
-    }
-
-    private void Back()
-    {
-        Interface.BackToGame();
-    }
+        private void Back()
+        {
+            Interface.BackToGame();
+        }
+    } 
 }

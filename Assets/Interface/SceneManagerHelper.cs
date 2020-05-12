@@ -1,20 +1,24 @@
-﻿using Helper;
+﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class SceneManagerHelper :  Singleton<SceneManagerHelper>
+namespace Ermolaev_3D
 {
-    [System.Serializable]
-    public struct SceneDate
+    public class SceneManagerHelper : Singleton<SceneManagerHelper>
     {
-        public SceneField MainMenu;
-        public SceneField Game;
-    }
 
-    public SceneDate Scenes;
+        [HideInInspector] public ScenesHolderScriptableObject.SceneDate Scenes;
 
-    public override bool Check()
-    {
-        if (Scenes.Game != null && Scenes.MainMenu != null)
-            return true;
-        return false;
+        private void Awake()
+        {
+            var tmp = Resources.Load<ScenesHolderScriptableObject>("ScenesHolder");
+            Scenes = tmp.Scenes;
+        }
+
+        public override bool Check()
+        {
+            if (Scenes.Game != null && Scenes.MainMenu != null)
+                return true;
+            return false;
+        }
     }
 }

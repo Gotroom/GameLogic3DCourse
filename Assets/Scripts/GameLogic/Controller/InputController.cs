@@ -127,12 +127,6 @@ namespace Ermolaev_3D
                 }
             }
 
-            if (Input.GetKeyDown(_cancel))
-            {
-                ServiceLocator.Resolve<WeaponController>().Off();
-                ServiceLocator.Resolve<FlashLightController>().Off();
-            }
-
             if (Input.GetKeyDown(_reloadClip))
             {
                 ServiceLocator.Resolve<WeaponController>().ReloadClip();

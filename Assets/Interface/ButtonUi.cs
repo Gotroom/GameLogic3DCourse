@@ -1,37 +1,41 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public sealed class ButtonUi : MonoBehaviour, IControlText {
+namespace Ermolaev_3D
+{
+    public sealed class ButtonUi : MonoBehaviour, IControlText
+    {
 
-    private Text _text;
-    private Button _control;
+        private Text _text;
+        private Button _control;
 
-    public Text GetText
-    {
-        get
+        public Text GetText
         {
-            if (!_text)
+            get
             {
-                _text = transform.GetComponentInChildren<Text>();
+                if (!_text)
+                {
+                    _text = transform.GetComponentInChildren<Text>();
+                }
+                return _text;
             }
-            return _text;
         }
-    }
-    public Button GetControl
-    {
-        get
+        public Button GetControl
         {
-            if (!_control)
+            get
             {
-                _control = transform.GetComponentInChildren<Button>();
+                if (!_control)
+                {
+                    _control = transform.GetComponentInChildren<Button>();
+                }
+                return _control;
             }
-            return _control;
         }
+        public void SetInteractable(bool value)
+        {
+            GetControl.interactable = value;
+        }
+        public GameObject Instance => gameObject;
+        public Selectable Control => GetControl;
     }
-    public void SetInteractable(bool value)
-    {
-        GetControl.interactable = value;
-    }
-    public GameObject Instance => gameObject;
-    public Selectable Control => GetControl;
 }

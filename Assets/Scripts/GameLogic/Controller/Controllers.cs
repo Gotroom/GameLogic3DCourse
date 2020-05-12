@@ -58,5 +58,18 @@ namespace Ermolaev_3D
             ServiceLocator.Resolve<PlayerController>().On();
             ServiceLocator.Resolve<BotController>().On();
         }
+
+        public void Dispose()
+        {
+            ServiceLocator.Resolve<DayNightController>().Dispose();
+            ServiceLocator.Resolve<PlayerController>().Dispose();
+            ServiceLocator.Resolve<FlashLightController>().Dispose();
+            ServiceLocator.Resolve<WeaponController>().Dispose();
+            ServiceLocator.Resolve<AimController>().Dispose();
+            ServiceLocator.Resolve<InputController>().Dispose();
+            ServiceLocator.Resolve<SelectionController>().Dispose();
+            ServiceLocator.Resolve<BotController>().Dispose();
+            ServiceLocator.Resolve<SaveLoadController>().Dispose();
+        }
     }
 }

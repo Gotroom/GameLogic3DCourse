@@ -1,9 +1,11 @@
 ﻿using UnityEditor;
 using UnityEngine;
 
-[CustomEditor(typeof(CreateInterface))]
-public class CreateInterfaceEditor : Editor
+namespace Ermolaev_3D
 {
+    [CustomEditor(typeof(CreateInterface))]
+    public class CreateInterfaceEditor : Editor
+    {
         private static CreateInterface _interface;
         private static bool _isPressButtonMainMenu;
         private static bool _isPressButtonMenuPause;
@@ -25,4 +27,6 @@ public class CreateInterfaceEditor : Editor
                 interfaceTarget.CreateMenuPause();
             }
         }
+    }
+
 }
